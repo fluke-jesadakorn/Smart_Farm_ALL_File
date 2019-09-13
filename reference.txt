@@ -1,0 +1,4 @@
+//socket example
+https://www.valentinog.com/blog/socket-react/
+//socket example
+https://engineering.thinknet.co.th/%E0%B8%97%E0%B8%B3%E0%B9%80%E0%B8%A7%E0%B9%87%E0%B8%9A%E0%B9%81%E0%B8%9A%E0%B8%9A-realtime-%E0%B8%87%E0%B9%88%E0%B8%B2%E0%B8%A2%E0%B9%86%E0%B8%94%E0%B9%89%E0%B8%A7%E0%B8%A2-socket-io-node-js-react-f299bfa4e78a

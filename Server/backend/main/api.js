@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
 const express = require('express');
-var cors = require('cors');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
+const store = require('./store')
 const SchemaFarm = require('./SchemaFarm');
 
 const API_PORT = 3001;
@@ -81,6 +82,10 @@ router.post('/putData', (req, res) => {
   });
 });
 
+//button on, off
+router.get('/button',(req,res)=>{
+  console.log(res.json())
+})
 // append /api for our http requests
 app.use('/api', router);
 

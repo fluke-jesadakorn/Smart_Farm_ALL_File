@@ -1,5 +1,6 @@
 const api = require('./main/api')
-const nbserver = require('./main/nbserver')
+var nbserver = require('./main/nbserver')
+var store = require('./main/store')
 
-setInterval(function(){console.log(nbserver.getData().temp)},1000)
-nbserver.listen()
+nbserver.listen();
+setInterval(()=>{console.log(store.temp)},1000)
