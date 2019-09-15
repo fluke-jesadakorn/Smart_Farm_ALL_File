@@ -39,7 +39,7 @@ export default class Navigation extends React.Component {
           <NavBtn><Link to="/">HOME</Link></NavBtn>
           <NavBtn><Link to="/graph">GRAPH</Link></NavBtn>    
           <NavBtn><Link to="/control">CONTROL</Link></NavBtn>    
-          <NavBtn><Link to="/profile">USER</Link></NavBtn>
+          <NavBtn><Link to="/profile">PROFILE</Link></NavBtn>
         </BackgroungNav> 
         <Switch>
           <Route path="/" exact component={home}/>
