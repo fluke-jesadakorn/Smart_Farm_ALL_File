@@ -44,6 +44,6 @@ void loop()
       previousMillis = currentMillis;
   
     }
-  UDPReceive resp = AISnb.waitResponse();
+  UDPReceive resp = AISnb.waitResponse()
      
 }
