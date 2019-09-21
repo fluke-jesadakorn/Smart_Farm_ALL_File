@@ -11,7 +11,6 @@ server.use(bodyParser.urlencoded({
     extended: true
 }))
 
-
 const app = server.listen(port, function (err, result) {
     console.log('running in port http://localhost:' + port)
 })
