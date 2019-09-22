@@ -12,7 +12,7 @@ function listen() {
 		//console.log("server got: " + msg + " from " + rinfo.address + ":" + rinfo.port);
 		store.temp = msg.toString()
 		store.nbip = rinfo.address
-		store.nbport = rinfo.rinfo.port
+		store.nbport = rinfo.port
 		var ack = new Buffer("Hello ack")
 		server.send(ack, 0, ack.length, rinfo.port, rinfo.address, function(err, bytes) {
 		console.log("sent ACK.")
