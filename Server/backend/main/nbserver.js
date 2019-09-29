@@ -8,6 +8,7 @@ function listen() {
 		console.log("server error:\n" + err.stack);
 		server.close()
 	})
+
 	server.on("message", function (msg, rinfo) {
 		//console.log("server got: " + msg + " from " + rinfo.address + ":" + rinfo.port);
 		store.temp = msg.toString()
@@ -17,7 +18,7 @@ function listen() {
 		server.send(ack, 0, ack.length, rinfo.port, rinfo.address, function(err, bytes) {
 		console.log("sent ACK.")
 		})
-		console.log(store);
+		//console.log(store);
 	})
 
 	server.on("listening", function () {

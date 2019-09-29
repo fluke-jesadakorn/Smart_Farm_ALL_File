@@ -9,7 +9,7 @@ class Graph extends Component {
 		//for SocketIO
       	input: '',
 		message: [],
-		endpoint: "http://localhost:3003", // เชื่อมต่อไปยัง url ของ realtime server
+		endpoint: "61.19.181.29:3003", // เชื่อมต่อไปยัง url ของ realtime server
 		
 		//for ApexChart
 		options: {
@@ -23,7 +23,7 @@ class Graph extends Component {
 		series: [
 			{
 				name: "Temp",
-				data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+				data: [0,0,0,0,0,0,0,0,0,0]
 			}
 		],
 
@@ -42,27 +42,29 @@ class Graph extends Component {
 	
 	//เอาไว้ใส่ Debug
 	this.setState({input:''})
-	//push เมื่อ Data มา จาก index สุดท้าย
-	this.state.series[0].data.push(input);
-	//shift Array ทิ้งใน index[0] ไล่ซ้าย
-	this.state.series[0].data.shift()
+	
 	console.log("Pushed and Poped data")
   }
 
   // รอรับข้อมูลเมื่อ server มีการ update
-  response = () => {
+  response = async () => {
     const { endpoint, message } = this.state
     const temp = message
     const socket = socketIOClient(endpoint)
-    socket.on('new-message', (messageNew) => {
+    await socket.on('new-message', (messageNew) => {
 	  temp.push(messageNew)
 	  //แสดงผลไม่เกิน 5 ตัว
-	  if(this.state.message.length > 5){
+	  if(this.state.message.length > 10){
 		this.state.message.shift()
 	  }
 	  this.setState({ message: temp })
-	  this.state.series[0].data.push(message);
-	  this.state.series[0].data.shift()
+	  //push เมื่อ Data มา จาก index สุดท้าย
+	  this.state.series[0].data.push(messageNew);
+
+	  //shift Array ทิ้งใน index[0] ไล่ซ้าย
+	  if(this.state.series[0].data.length > 10){
+		this.state.series[0].data.shift()
+	  }	  
     })
   }
 
@@ -96,7 +98,5 @@ class Graph extends Component {
     )
   }
 }
-
 const style = { marginTop: 20, paddingLeft: 50 }
-
 export default Graph
