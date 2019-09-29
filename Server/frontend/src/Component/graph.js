@@ -56,8 +56,13 @@ class Graph extends Component {
     const socket = socketIOClient(endpoint)
     socket.on('new-message', (messageNew) => {
 	  temp.push(messageNew)
-	  temp.pop()
-      this.setState({ message: temp })
+	  //แสดงผลไม่เกิน 5 ตัว
+	  if(this.state.message.length > 5){
+		this.state.message.shift()
+	  }
+	  this.setState({ message: temp })
+	  this.state.series[0].data.push(message);
+	  this.state.series[0].data.shift()
     })
   }
 
