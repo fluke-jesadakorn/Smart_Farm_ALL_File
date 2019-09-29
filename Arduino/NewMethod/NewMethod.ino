@@ -9,7 +9,7 @@ String udpData = "HelloWorld";
 
 AIS_NB_BC95 AISnb;
 
-const long interval = 20000;  //millisecond
+const long interval = 2000;  //millisecond
 unsigned long previousMillis = 0;
 
 long cnt = 0;
@@ -36,7 +36,7 @@ void loop()
       cnt++;     
            
       // Send data in String 
-      UDPSend udp = AISnb.sendUDPmsgStr(serverIP, serverPort, udpData+String(cnt));
+      UDPSend udp = AISnb.sendUDPmsgStr(serverIP, serverPort, String(cnt));
    
       //Send data in HexString     
       //udpDataHEX = AISnb.str2HexStr(udpData);
@@ -44,6 +44,6 @@ void loop()
       previousMillis = currentMillis;
   
     }
-  UDPReceive resp = AISnb.waitResponse()
+  UDPReceive resp = AISnb.waitResponse();
      
 }
