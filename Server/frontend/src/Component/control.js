@@ -16,7 +16,7 @@ export default class Control extends Component {
 
     }
     sendswitch = () => {
-        axios.post('http://localhost:7000', {
+        axios.post('http://localhost:3001/api/button/', {
             data : "hello",
             my : "world"
         })

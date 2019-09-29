@@ -1,10 +1,12 @@
+module.exports = {server} 
+function server(){
 var express = require('express') 
 var bodyParser =require('body-parser') 
 var http = require('http') 
 var socketIO =require ('socket.io')
 
 const server = express()
-const port = 9000;
+const port = 3003;
 
 server.use(bodyParser.json())
 server.use(bodyParser.urlencoded({
@@ -31,4 +33,4 @@ io.on('connection', client => {
     })
 })
 
-module.exports = server
+}
