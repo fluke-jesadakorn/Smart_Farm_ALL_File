@@ -30,4 +30,3 @@ function listen() {
 		exclusive: true
 	});
 }
-listen()

@@ -82,9 +82,8 @@ router.post('/putData', (req, res) => {
   });
 });
 
-//button on, off
 router.get('/button',(req,res)=>{
-  console.log(res.json())
+    console.log(req.body)
 })
 // append /api for our http requests
 app.use('/api', router);

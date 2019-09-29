@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components'
+import axios from 'axios';
 
 //css with styled component
 const Button = styled.div`
@@ -14,16 +15,18 @@ export default class Control extends Component {
         }
 
     }
-    handleOnOff = (event) => {
-        this.setState({sw1:true})
-        console.log(this.state.sw1)
+    sendswitch = () => {
+        axios.post('http://localhost:7000', {
+            data : "hello",
+            my : "world"
+        })
     }
-
+    
     render(){
 
         return (
             <Button>
-                <button onClick= {this.handleOnOff}> work </button>
+            <button onClick={()=>{this.sendswitch()}}>switchbt</button>
             </Button>
         )
     }
