@@ -55,7 +55,8 @@ class Graph extends Component {
     const temp = message
     const socket = socketIOClient(endpoint)
     socket.on('new-message', (messageNew) => {
-      temp.push(messageNew)
+	  temp.push(messageNew)
+	  temp.pop()
       this.setState({ message: temp })
     })
   }
