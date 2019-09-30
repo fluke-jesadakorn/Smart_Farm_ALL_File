@@ -121,7 +121,7 @@ function getDayWiseTimeSeries(baseval, count, yrange) {
 	var i = 0;
 	while (i < count) {
 		var x = baseval;
-		//var y //= Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min;
+		var y = Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min;
 
 		data.push({
 			x, y
@@ -151,7 +151,7 @@ function getNewSeries(baseval, yrange) {
 	
 	data.push({
 		x: newDate,
-		//y: Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min
+		y: Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min
 	})
 	
 }
@@ -226,7 +226,7 @@ response = () => {
     const socket = socketIOClient(endpoint)
     socket.on('nb', (messageNew) => {
 		//push เมื่อ Data มา
-		data.push({x: "" ,y : messageNew})
+		//data.push({x: "" ,y : messageNew})
 		//แสดงผลไม่เกิน 10 ตัว
 		/*if(data.length > 10){
 			//shift Array ทิ้งใน index[0] ไล่ซ้าย
