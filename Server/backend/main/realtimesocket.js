@@ -33,7 +33,6 @@ function server(){
             //ส่งข้อความที่รอรับจาก client
             io.sockets.emit('new-message', message)
             //เอา Temp กระจายทุก client
-        })     
-        setInterval(()=>{client.broadcast.emit('new-message',store.temp)},3000)   
+        })  
     })
 }
