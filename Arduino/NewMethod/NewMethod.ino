@@ -5,11 +5,11 @@ String apnName = "devkit.nb";
 String serverIP = "61.19.181.29"; // Your Server IP
 String serverPort = "7000"; // Your Server Port
 
-String udpData = "HelloWorld";
+//String udpData = "HelloWorld";
 
 AIS_NB_BC95 AISnb;
 
-const long interval = 2000;  //millisecond
+const long interval = 5000;  //millisecond
 unsigned long previousMillis = 0;
 
 long cnt = 0;
@@ -30,13 +30,14 @@ void setup()
 }
 void loop()
 { 
+  int randNumber = random(0, 100);
   unsigned long currentMillis = millis();
   if (currentMillis - previousMillis >= interval)
     {
       cnt++;     
            
       // Send data in String 
-      UDPSend udp = AISnb.sendUDPmsgStr(serverIP, serverPort, String(cnt));
+      UDPSend udp = AISnb.sendUDPmsgStr(serverIP, serverPort, String(randNumber));
    
       //Send data in HexString     
       //udpDataHEX = AISnb.str2HexStr(udpData);
