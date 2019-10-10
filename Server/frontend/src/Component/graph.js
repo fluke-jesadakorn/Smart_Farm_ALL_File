@@ -5,8 +5,6 @@ function getRandomInt(max) {
 	return Math.floor(Math.random() * Math.floor(max));
 }
 
-
-
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -41,32 +39,43 @@ export default class App extends Component {
       ]
     };
   }
-	Rand = () => {
-		let temp = this.state.series[0]
-		var int = getRandomInt(10)
-		console.log(int)
-		this.setState({temp:int})
+	rand = () => {
+		let data = this.state.series[0].data
+		//console.log(int)
+		console.log(data)
 	}
 
+	push = () => {
+		let data = this.state.series[0].data
+		var int = getRandomInt(10)
+		data.push(int)
+	}
 
-  componentDidMount = () => {
-	  setInterval(()=>{this.Rand()},1000)
-  }
+	pop = () => {
+		let data = this.state.series[0].data
+		data.shift()
+	}
 
-  render() {
-    return (
-      <div className="app">
-        <div className="row">
-          <div className="mixed-chart">
-            <Chart
-              options={this.state.options}
-              series={this.state.series}
-              type="bar"
-              width="500"
-            />
-          </div>
-        </div>
-      </div>
-    );
-  }
-}
+	componentDidMount = () => {
+		setInterval(()=>{this.rand()},1000)
+		setInterval(()=>{this.push()},1000)
+		setInterval(()=>{this.pop()},1000)
+	}
+
+	render() {
+		return (
+			<div className="app">
+			<div className="row">
+			<div className="mixed-chart">
+			<Chart
+				options={this.state.options}
+				series={this.state.series}
+				type="bar"
+				width="500"
+			/>
+			</div>
+			</div>
+			</div>
+			);
+		}
+	}
