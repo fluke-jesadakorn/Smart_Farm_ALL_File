@@ -53,6 +53,7 @@ export default class App extends Component {
 		var int10 = getRandomInt(10)
 		var arr = [int,int2,int3,int4,int5,int6,int7,int8,int9,int10]
 		this.setState({series:[{data:arr}]})
+		console.log(this.state.series[0].data)
 	}
 
 	componentDidMount = () => {
