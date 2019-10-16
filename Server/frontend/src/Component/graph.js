@@ -40,40 +40,40 @@ export default class App extends Component {
     };
   }
 
-	rand = () => {
-		var int = getRandomInt(10)
-		var int2 = getRandomInt(10)
-		var int3 = getRandomInt(10)
-		var int4 = getRandomInt(10)
-		var int5 = getRandomInt(10)
-		var int6 = getRandomInt(10)
-		var int7 = getRandomInt(10)
-		var int8 = getRandomInt(10)
-		var int9 = getRandomInt(10)
-		var int10 = getRandomInt(10)
-		var arr = [int,int2,int3,int4,int5,int6,int7,int8,int9,int10]
-		this.setState({series:[{data:arr}]})
-		console.log(this.state.series[0].data)
-	}
+rand = () => {
+	var int = getRandomInt(10)
+	var int2 = getRandomInt(10)
+	var int3 = getRandomInt(10)
+	var int4 = getRandomInt(10)
+	var int5 = getRandomInt(10)
+	var int6 = getRandomInt(10)
+	var int7 = getRandomInt(10)
+	var int8 = getRandomInt(10)
+	var int9 = getRandomInt(10)
+	var int10 = getRandomInt(10)
+	var arr = [int,int2,int3,int4,int5,int6,int7,int8,int9,int10]
+	this.setState({series:[{data:arr}]})
+	console.log(this.state.series[0].data)
+}
 
-	componentDidMount = () => {
-		this.interval = setInterval(()=>{this.rand()},1000)
-	}
+componentDidMount = () => {
+	this.interval = setInterval(()=>{this.rand()},1000)
+}
 
-	render() {
-		return (
-			<div className="app">
-			<div className="row">
-			<div className="mixed-chart">
-			<Chart
-				options={this.state.options}
-				series={this.state.series}
-				type="line"
-				width="500"
-			/>
-			</div>
-			</div>
-			</div>
-			);
-		}
+render() {
+	return (
+		<div className="app">
+		<div className="row">
+		<div className="mixed-chart">
+		<Chart
+			options={this.state.options}
+			series={this.state.series}
+			type="line"
+			width="500"
+		/>
+		</div>
+		</div>
+		</div>
+		);
 	}
+}
