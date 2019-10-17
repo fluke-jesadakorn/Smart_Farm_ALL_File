@@ -6,29 +6,30 @@ function getRandomInt(max) {
 }
 
 export default class App extends Component {
-  constructor(props) {
-    super(props);
+	constructor(props) {
+    	super(props);
 
-    this.state = {
-      options: {
-        chart: {
-		  id: "line",
-		  animations: {
-			enabled: true,
-			easing: 'easeinout',
-			speed: 1500,
-			animateGradually: {
+    	this.state = {
+			temp : [],
+      		options: {
+        	chart: {
+			id: "line",
+			animations: {
 				enabled: true,
-				delay: 150
-			},
-			dynamicAnimation: {
-				enabled: true,
-				speed: 350
-			}
+				easing: 'linear',
+				speed: 50,
+				animateGradually: {
+					enabled: true,
+					delay: 100
+				},
+				dynamicAnimation: {
+					enabled: false,
+					speed: 500
+				}
 			}
         },
         xaxis: {
-          categories: [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+          categories: []
         }
       },
       series: [
@@ -37,42 +38,34 @@ export default class App extends Component {
           data: []
         }
       ]
-    };
+	};
   }
 
-rand = () => {
-	var int = getRandomInt(10)
-	var int2 = getRandomInt(10)
-	var int3 = getRandomInt(10)
-	var int4 = getRandomInt(10)
-	var int5 = getRandomInt(10)
-	var int6 = getRandomInt(10)
-	var int7 = getRandomInt(10)
-	var int8 = getRandomInt(10)
-	var int9 = getRandomInt(10)
-	var int10 = getRandomInt(10)
-	var arr = [int,int2,int3,int4,int5,int6,int7,int8,int9,int10]
-	this.setState({series:[{data:arr}]})
-	console.log(this.state.series[0].data)
+add = () => {
+	let temp = this.state.series[0].data
+	let num = getRandomInt(10)
+	if(temp.length > 9){
+		let shift = temp.shift()
+		this.setState({series:[{data:shift}]})
+	}
+	let concat = temp.concat(num)
+	this.setState({series:[{data:concat}]})
+	//console.log(temp)
 }
 
 componentDidMount = () => {
-	this.interval = setInterval(()=>{this.rand()},1000)
+	this.interval = setInterval(()=>{this.add()},1000)
 }
 
 render() {
 	return (
-		<div className="app">
-		<div className="row">
-		<div className="mixed-chart">
+		<div>
 		<Chart
 			options={this.state.options}
 			series={this.state.series}
 			type="line"
 			width="500"
 		/>
-		</div>
-		</div>
 		</div>
 		);
 	}
