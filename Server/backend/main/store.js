@@ -1,6 +1,10 @@
-module.exports = data = {
-    temp : null,
-    switch : false, // true == on, false == off
-    nbip : null,
-    nbport: null,
+module.exports =
+store = () => {
+    var data = {
+        temp : null,
+        sw : false, //sw = switch, true == on, false == off
+        nbip : null,
+        nbport: null,
+    }
+    return data
 }

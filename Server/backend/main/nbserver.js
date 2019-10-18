@@ -17,7 +17,7 @@ const app = sc.listen(port, function (err, result) {
 })
 const io = socketIO.listen(app);
     // รอการ connect จาก client
-    /*io.on('connection', client => {
+    io.on('connection', client => {
         console.log('user connected')
     
         // เมื่อ Client ตัดการเชื่อมต่อ
@@ -30,8 +30,8 @@ const io = socketIO.listen(app);
             //ส่งข้อความที่รอรับจาก client
             io.sockets.emit('new-message', message)
             //เอา Temp กระจายทุก client
-        })  
-    })*/
+        })
+    })
 
 function listen() {
 	server.on("error", function (err) {
