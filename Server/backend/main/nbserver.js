@@ -16,23 +16,7 @@ const app = sc.listen(port, function (err, result) {
 	console.log('running in port http://localhost:' + port)
 })
 
-const io = socketIO.listen(app);
-    // รอการ connect จาก client
-    io.on('connection', client => {
-        console.log('user connected')
-    
-        // เมื่อ Client ตัดการเชื่อมต่อ
-        client.on('disconnect', () => {
-            console.log('user disconnected')
-        })
 
-        // ส่งข้อมูลไปยัง Client ทุกตัวที่เขื่อมต่อแบบ Realtime
-        client.on('sent-message', function (message) {
-            //ส่งข้อความที่รอรับจาก client
-            io.sockets.emit('new-message', message)
-            //เอา Temp กระจายทุก client
-        })
-    })
 
 function listen() {
 	server.on("error", function (err) {
@@ -49,8 +33,24 @@ function listen() {
 		var ack = new Buffer("Hello ack")
 		server.send(ack, 0, ack.length, rinfo.port, rinfo.address, function(err, bytes) {
 			console.log("sent ACK.")
-			if (store.temp != store.temp)
 			io.sockets.emit('nb', store.temp)
+			const io = socketIO.listen(app);
+    		// รอการ connect จาก client
+			io.on('connection', client => {
+				console.log('user connected')
+			
+				// เมื่อ Client ตัดการเชื่อมต่อ
+				client.on('disconnect', () => {
+					console.log('user disconnected')
+				})
+
+				// ส่งข้อมูลไปยัง Client ทุกตัวที่เขื่อมต่อแบบ Realtime
+				client.on('sent-message', function (message) {
+					//ส่งข้อความที่รอรับจาก client
+					io.sockets.emit('new-message', message)
+					//เอา Temp กระจายทุก client
+				})
+			})
 		})
 		//console.log(store);
 	})

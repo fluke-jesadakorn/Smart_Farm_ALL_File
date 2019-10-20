@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import Chart from "react-apexcharts";
 import socketIOClient from "socket.io-client"
-
+/*
 function getRandomInt(max) {
 	return Math.floor(Math.random() * Math.floor(max));
 }
-
+*/
 export default class App extends Component {
 	constructor(props) {
     	super(props)
