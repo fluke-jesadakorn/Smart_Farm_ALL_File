@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Chart from "react-apexcharts";
 import socketIOClient from "socket.io-client"
-require('dotenv').config()
+import config from "../config"
 /*
 function getRandomInt(max) {
 	return Math.floor(Math.random() * Math.floor(max));
@@ -12,8 +12,7 @@ export default class App extends Component {
     	super(props)
 
     	this.state = {
-			//endpoint: 'http://localhost:3003/',
-			endpoint: process.env.REACT_APP_SOCKET_URL,
+			endpoint : config.SOCKET_URL || 3003,
       		options: {
         	chart: {
 			id: "line",

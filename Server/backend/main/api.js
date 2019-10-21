@@ -1,3 +1,4 @@
+require('dotenv').config()
 const mongoose = require('mongoose');
 const express = require('express');
 const cors = require('cors');
@@ -5,7 +6,6 @@ const bodyParser = require('body-parser');
 const logger = require('morgan');
 const store = require('./store')
 const SchemaFarm = require('./SchemaFarm');
-require('dotenv').config()
 
 const API_PORT = DATABASE_URL;
 const app = express();
