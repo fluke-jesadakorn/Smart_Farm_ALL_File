@@ -1,12 +1,14 @@
 module.exports = {listen}
-var express = require('express') 
-var store = require('./store')
-var dgram = require("dgram")
-var server = dgram.createSocket("udp4")
-var socketIO = require ('socket.io')
-var bodyParser =require('body-parser')
-var sc = express()
-var port = 3003;
+
+require('dotenv').config()
+const express = require('express') 
+const store = require('./store')
+const dgram = require("dgram")
+const server = dgram.createSocket("udp4")
+const socketIO = require ('socket.io')
+const bodyParser =require('body-parser')
+const sc = express()
+const port = process.env.SOCKETIO_PORT;
 
 sc.use(bodyParser.json())
 sc.use(bodyParser.urlencoded({
@@ -16,7 +18,7 @@ const app = sc.listen(port, function (err, result) {
 	console.log('running in port http://localhost:' + port)
 })
 
-
+const io = socketIO.listen(app);
 
 function listen() {
 	server.on("error", function (err) {
@@ -29,28 +31,11 @@ function listen() {
 		store.temp = msg.toString()
 		store.nbip = rinfo.address
 		store.nbport = rinfo.port
+		io.sockets.emit('nb', store.temp)
 		
 		var ack = new Buffer("Hello ack")
 		server.send(ack, 0, ack.length, rinfo.port, rinfo.address, function(err, bytes) {
 			console.log("sent ACK.")
-			io.sockets.emit('nb', store.temp)
-			const io = socketIO.listen(app);
-    		// รอการ connect จาก client
-			io.on('connection', client => {
-				console.log('user connected')
-			
-				// เมื่อ Client ตัดการเชื่อมต่อ
-				client.on('disconnect', () => {
-					console.log('user disconnected')
-				})
-
-				// ส่งข้อมูลไปยัง Client ทุกตัวที่เขื่อมต่อแบบ Realtime
-				client.on('sent-message', function (message) {
-					//ส่งข้อความที่รอรับจาก client
-					io.sockets.emit('new-message', message)
-					//เอา Temp กระจายทุก client
-				})
-			})
 		})
 		//console.log(store);
 	})

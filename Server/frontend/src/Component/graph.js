@@ -55,11 +55,13 @@ add = (json) => {
 soc = () => {
 	const {endpoint} = this.state
 	const socket = socketIOClient(endpoint)
-	socket.on("nb" , json => this.add(json))
+	socket.on("nb" , (json) => {this.add(json)
+	})
 }
 
 componentDidMount = () => {
-	this.interval = setInterval(()=>{this.soc()},1000)
+	//this.interval = setInterval(()=>{this.soc()},1000)
+	this.soc()
 }
 
 render() {
