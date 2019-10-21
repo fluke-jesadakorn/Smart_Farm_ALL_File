@@ -5,8 +5,9 @@ const bodyParser = require('body-parser');
 const logger = require('morgan');
 const store = require('./store')
 const SchemaFarm = require('./SchemaFarm');
+require('dotenv').config()
 
-const API_PORT = 3001;
+const API_PORT = DATABASE_URL;
 const app = express();
 app.use(cors());
 const router = express.Router();
