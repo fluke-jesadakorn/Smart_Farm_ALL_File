@@ -20,7 +20,7 @@ const app = sc.listen(port, function (err, result) {
 
 const io = socketIO.listen(app);
 
-function listen() {
+function listen(){
 	server.on("error", function (err) {
 		console.log("server error:\n" + err.stack);
 		server.close()

@@ -12,23 +12,23 @@ export default class App extends Component {
     	super(props)
 
     	this.state = {
-			endpoint : config.SOCKET_URL || 3003,
-      		options: {
-        	chart: {
-			id: "line",
-			animations: {
-				enabled: true,
-				easing: 'linear',
-				speed: 50,
-				animateGradually: {
-					enabled: true,
-					delay: 100
-				},
-				dynamicAnimation: {
-					enabled: false,
-					speed: 500
-				}
-			}
+				endpoint : config.SOCKET_URL,
+      	options: {
+        chart: {
+					id: "line",
+					animations: {
+						enabled: true,
+						easing: 'linear',
+						speed: 50,
+						animateGradually: {
+							enabled: true,
+							delay: 100
+						},
+						dynamicAnimation: {
+							enabled: false,
+							speed: 500
+						}
+					}
         },
         xaxis: {
           categories: []
