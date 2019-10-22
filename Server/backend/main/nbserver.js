@@ -8,7 +8,7 @@ const server = dgram.createSocket("udp4")
 const socketIO = require ('socket.io')
 const bodyParser =require('body-parser')
 const sc = express()
-const port = config.NB_PORT
+const port = config.SOCKET_PORT
 
 sc.use(bodyParser.json())
 sc.use(bodyParser.urlencoded({
@@ -47,7 +47,7 @@ function listen(){
 
 	server.bind({
 		address: '0.0.0.0',
-		port: 7000,
+		port: config.NB_PORT,
 		exclusive: true
 	});
 }

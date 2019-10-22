@@ -4,7 +4,7 @@ var message;
 function send(){
   message = str.toString()
   const client = dgram.createSocket('udp4');
-  const port = 7000
+  const port = 5003
   client.send(message, port, 'localhost', (err) => {
     client.close();
   });
