@@ -1,4 +1,4 @@
-module.exports = {database}
+module.exports ={database}
 function database(){
   require('dotenv').config()
   const mongoose = require('mongoose');
