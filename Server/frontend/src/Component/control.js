@@ -13,8 +13,8 @@ export default class Control extends Component {
         this.state = {
             sw1:false,
         }
-
     }
+    
     sendswitch = () => {
         axios.post('http://localhost:3001/api/button/', {
             data : "hello",
