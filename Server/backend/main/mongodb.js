@@ -34,11 +34,13 @@ function database(){
   app.use(bodyParser.json());
   app.use(logger('dev'));
 
+  var findAll = SchemaFarm.find()
+
   // this is our get method
   // this method fetches all available data in our database
   router.get('/getData', async (req, res) => {
     try{
-      let getData = await SchemaFarm.find()
+      let getData = await findAll
       await res.status(200).json(getData)
     }catch(err){
       res.status(400).json({status:"No Data"})
@@ -57,12 +59,9 @@ function database(){
 
   // this is our delete method
   // this method removes existing data in our database
-  router.delete('/deleteData', (req, res) => {
-    const { id } = req.body;
-    SchemaFarm.findByIdAndRemove(id, (err) => {
-      if (err) return res.send(err);
-      return res.json({ success: true });
-    });
+  router.delete('/deleteData', async (req, res) => {
+    let index = req.body.params
+    await console.log(index)
   });
 
   // this is our create methid
