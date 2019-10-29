@@ -36,12 +36,14 @@ function database(){
 
   // this is our get method
   // this method fetches all available data in our database
-  router.get('/getData', (req, res) => {
-      SchemaFarm.find((err, data) => {
-      if (err) return res.json({ success: false, error: err });
-      return res.json({ success: true, data: data });
-    });
-  });
+  router.get('/getData', async (req, res) => {
+    try{
+      let getData = await SchemaFarm.find()
+      await res.status(200).json(getData)
+    }catch(err){
+      res.status(400).json({status:"No Data"})
+    }
+  })
 
   // this is our update method
   // this method overwrites existing data in our database
