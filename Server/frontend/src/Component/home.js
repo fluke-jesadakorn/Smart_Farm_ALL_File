@@ -7,7 +7,7 @@ export default class Home extends React.Component{
     this.state = {
       data:[],
       pages:{
-        begin:0, stop:0
+        begin:0, stop:5
       }
     }
     this.addData = this.addData.bind(this)
@@ -28,7 +28,7 @@ export default class Home extends React.Component{
   }
 
   addData = async () => {
-    await axios.post("http://localhost:5004/api/addData", { data:"MyNew" })
+    await axios.post("http://localhost:5004/api/addData", { data:"3" })
   }
 
   deleteData = async (index) => {
@@ -47,12 +47,15 @@ export default class Home extends React.Component{
   }
 
   multipage = async (previous, next) => {
-    let preButton
-    let nextButton
-    if(previous){
-      preButton = this.state.pages.begin++
+    var five = 5
+    var preButton
+    var nextButton
+    if(previous && this.state.pages.begin != 0){
+      preButton = this.state.pages.begin--
+      nextButton = this.state.pages.stop--
     }
     if(next){ 
+      previous = this.state.pages.begin++
       nextButton = this.state.pages.stop++
     }
     this.setState({begin : preButton, stop : nextButton})
@@ -61,11 +64,10 @@ export default class Home extends React.Component{
 
   render(){
     let { data, pages } = this.state
-
     return(
       <div>
         <div>
-        {data.map((showData,index)=>
+        {data.slice(pages.begin, pages.stop).map((showData,index)=>
           <li key = { index } > {index + 1} . { showData.data }
           <button onClick = {()=>{this.deleteData(index)}}> Delete </button>
           <button onClick = {()=>{this.editData()} }> Edit </button>
