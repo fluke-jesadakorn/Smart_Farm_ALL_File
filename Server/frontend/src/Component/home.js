@@ -27,9 +27,6 @@ export default class Home extends React.Component{
   addData = async () => {
     await axios.post("http://localhost:5004/api/addData", { data:"MyNew" })
   }
-  listIndex = async (indexId) => {
-    
-  }
 
   deleteData = async (index) => {
     let listId = await this.state.data.map((Id)=>{return Id.id})
@@ -42,6 +39,10 @@ export default class Home extends React.Component{
     console.log("Your sent delete data index : " + index)
   }
 
+  editData = () => {
+    return <h1>Hello</h1>
+  }
+
   render(){
     let { data } = this.state
     //console.log(data)
@@ -49,8 +50,9 @@ export default class Home extends React.Component{
       <div>
         <div>
         {data.map((showData,index)=>
-          <li key = { index } > {index+1} . { showData.data }
+          <li key = { index } > {index + 1} . { showData.data }
           <button onClick = {()=>{this.deleteData(index)}}> Delete </button>
+          <button onClick = {()=>{this.editData()} }> Edit </button>
           </li>
         )}
         </div>
