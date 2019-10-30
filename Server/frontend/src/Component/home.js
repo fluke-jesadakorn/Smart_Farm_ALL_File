@@ -5,7 +5,10 @@ export default class Home extends React.Component{
   constructor(){
     super()
     this.state = {
-      data:[]
+      data:[],
+      pages:{
+        begin:0, stop:0
+      }
     }
     this.addData = this.addData.bind(this)
   }
@@ -43,9 +46,22 @@ export default class Home extends React.Component{
     return <h1>Hello</h1>
   }
 
+  multipage = async (previous, next) => {
+    let preButton
+    let nextButton
+    if(previous){
+      preButton = this.state.pages.begin++
+    }
+    if(next){ 
+      nextButton = this.state.pages.stop++
+    }
+    this.setState({begin : preButton, stop : nextButton})
+    console.log(`previous: ${this.state.pages.begin} , next: ${this.state.pages.stop}`)
+  }
+
   render(){
-    let { data } = this.state
-    //console.log(data)
+    let { data, pages } = this.state
+
     return(
       <div>
         <div>
@@ -55,11 +71,13 @@ export default class Home extends React.Component{
           <button onClick = {()=>{this.editData()} }> Edit </button>
           </li>
         )}
+        <button onClick = {()=>{this.multipage(1,0)}}>Previous</button>
+        <button onClick = {()=>{this.multipage(0,1)}}>next</button>      
         </div>
 
-        <button onClick = {()=>{this.getData()}}>
+        {/*<button onClick = {()=>{this.getData()}}>
           Click to show data
-        </button>
+        </button>*/}
 
         <h3>Add Data</h3>
 
