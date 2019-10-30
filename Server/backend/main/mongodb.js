@@ -60,30 +60,31 @@ function database(){
   // this is our delete method
   // this method removes existing data in our database
   router.delete('/deleteData', async (req, res) => {
-    let index = req.body.params
-    await console.log(index)
+    let deleteIndex = await req.body.params
+    await findAll.remove({id:deleteIndex})
+    res.status(200).json({status:"success"})
   });
 
   // this is our create methid
   // this method adds new data in our database
-  router.post('/putData', (req, res) => {
-    let data = new SchemaFarm();
-
-    const { id, message } = req.body;
-
-    if ((!id && id !== 0) || !message) {
-      return res.json({
-        success: false,
-        error: 'INVALID INPUTS',
-      });
+  router.post('/addData', async (req, res) => {
+    try {
+      let getList = await findAll
+      let getCurrentId = await getList.map((id)=>{return id.id})
+      let CurrentId = await Math.max.apply(null, getCurrentId)
+      if(CurrentId == -Infinity){
+        CurrentId = 0
+      }else{
+        CurrentId++
+      }
+      await console.log(CurrentId)
+      let date = new Date()
+      let addData = await new SchemaFarm({ id : CurrentId, data : "fuck", date : date })
+      await addData.save()
+      await res.status(200).json({status:"success"})
+    }catch(err){
+      res.status(400).json({status:"Cannot insert data : " + err})
     }
-
-    data.message = message;
-    data.id = id;
-    data.save((err) => {
-      if (err) return res.json({ success: false, error: err });
-      return res.json({ success: true });
-    });
   });
 
   router.get('/button',(req,res)=>{

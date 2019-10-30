@@ -19,20 +19,19 @@ export default class Home extends React.Component{
     axios.get('http://localhost:5004/api/getData')
     .then(async (res)=>{
         let list = await res.data
-        let add = await list.map((x)=>{ return x.message })
-        this.setState({ data : add })
-        //await console.log("Your data is : " + loop)
+        let datas = await list.map((data)=>{ return data.message })
+        this.setState({ data : datas })
+        await console.log("Your data is : " + list)
     })
     .catch((err)=>{
       console.log("Connection Refuse By Detail : " + err)
     })
   }
-  addData = () => {
-    axios.get("http://localhost:5004/api/getData")
-    .then((res)=>{
-      console.log()
-    })
+
+  addData = async () => {
+    await axios.post("http://localhost:5004/api/addData") 
   }
+
   deleteData = async (index) => {
       axios.delete("http://localhost:5004/api/deleteData", { data : { params : index } })
       .catch((err)=>{
@@ -55,6 +54,10 @@ export default class Home extends React.Component{
         <button onClick = {this.getData}>
           Click to show data
         </button>
+
+        <h3>Add Data</h3>
+
+        <button onClick = { this.addData }>Add</button>
       </div>
     )
   }
