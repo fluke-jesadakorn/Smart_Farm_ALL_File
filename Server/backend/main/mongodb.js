@@ -34,17 +34,11 @@ function database(){
   app.use(bodyParser.json());
   app.use(logger('dev'));
 
-  var findAll = SchemaFarm.find()
-
   // this is our get method
   // this method fetches all available data in our database
   router.get('/getData', async (req, res) => {
-    try{
-      let getData = await findAll
+      let getData = await SchemaFarm.find()
       await res.status(200).json(getData)
-    }catch(err){
-      res.status(400).json({status:"No Data"})
-    }
   })
 
   // this is our update method
@@ -61,7 +55,7 @@ function database(){
   // this method removes existing data in our database
   router.delete('/deleteData', async (req, res) => {
     let deleteIndex = await req.body.params
-    await findAll.remove({id:deleteIndex})
+    await SchemaFarm.remove({id:deleteIndex})
     res.status(200).json({status:"success"})
   });
 
@@ -69,17 +63,16 @@ function database(){
   // this method adds new data in our database
   router.post('/addData', async (req, res) => {
     try {
-      let getList = await findAll
+      let getList = await SchemaFarm.find()
       let getCurrentId = await getList.map((id)=>{return id.id})
       let CurrentId = await Math.max.apply(null, getCurrentId)
-      if(CurrentId == -Infinity){
+      if(CurrentId == -Infinity)
         CurrentId = 0
-      }else{
+      else
         CurrentId++
-      }
-      await console.log(CurrentId)
-      let date = new Date()
-      let addData = await new SchemaFarm({ id : CurrentId, data : "fuck", date : date })
+      let JsonData = await req.body.data
+      let date = await new Date()
+      let addData = await new SchemaFarm({ id : CurrentId, data : JsonData, date : date })
       await addData.save()
       await res.status(200).json({status:"success"})
     }catch(err){
