@@ -27,13 +27,14 @@ function listen(){
 		server.close()
 	})
 
-	server.on("message", function (msg, rinfo) {
+	server.on("message", async (msg, rinfo) => {
 		//console.log("server got: " + msg + " from " + rinfo.address + ":" + rinfo.port);
-		store.moi = msg.toString()
-		store.nbip = rinfo.address
-		store.nbport = rinfo.port
-		io.sockets.emit('nb', store.moi)
-		axios.post("http://localhost:5004/api/addData", { data:store.moi })
+		store.moi = await msg.toString()
+		store.nbip = await rinfo.address
+		store.nbport = await rinfo.port
+		io.sockets.emit(await 'nb', store.moi)
+		console.log(await msg)
+		axios.post(await "http://localhost:5004/api/addData", { data:store.moi })
 		
 		var ack = new Buffer("Hello ack")
 		server.send(ack, 0, ack.length, rinfo.port, rinfo.address, function(err, bytes) {
