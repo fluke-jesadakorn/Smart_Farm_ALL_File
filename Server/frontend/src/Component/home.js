@@ -1,5 +1,5 @@
-import React from 'react';
-import axios from 'axios';
+import React from 'react'
+import axios from 'axios'
 
 export default class Home extends React.Component{
   constructor(){
@@ -7,7 +7,8 @@ export default class Home extends React.Component{
     this.state = {
       data:[],
       pages:{
-        begin:0, stop:5
+        begin:0,
+        stop:5
       }
     }
     this.addData = this.addData.bind(this)
@@ -22,7 +23,7 @@ export default class Home extends React.Component{
     .then(async (res)=>{
       let fromGetData = res.data
       let datas = fromGetData.map((data)=>{ return data })
-      this.setState({data:datas})
+      this.setState({data: datas})
       await console.log(datas)
     })
   }
@@ -47,25 +48,30 @@ export default class Home extends React.Component{
   }
 
   multipage = async (previous, next) => {
-    var five = 5
-    var preButton
-    var nextButton
-    if(previous && this.state.pages.begin != 0){
-      preButton = this.state.pages.begin--
-      nextButton = this.state.pages.stop--
+    let preButton = this.state.pages.begin
+    let nextButton = this.state.pages.stop
+
+    if(await previous && this.state.pages.begin != 0){
+      preButton = preButton - 5
+      nextButton = nextButton - 5
+      this.setState({pages: {begin: preButton, stop: nextButton}})
+      preButton = 0
+      nextButton = 0
     }
-    if(next){ 
-      previous = this.state.pages.begin++
-      nextButton = this.state.pages.stop++
+    if(await next){
+      preButton = preButton + 5
+      nextButton = nextButton + 5
+      this.setState({pages: {begin: preButton, stop: nextButton}})
+      preButton = 0
+      nextButton = 0
     }
-    this.setState({begin : preButton, stop : nextButton})
-    console.log(`previous: ${this.state.pages.begin} , next: ${this.state.pages.stop}`)
+    console.log(await `previous: ${this.state.pages.begin} , next: ${this.state.pages.stop}`)
   }
 
   render(){
     let { data, pages } = this.state
     return(
-      <div>
+      <div className = 'main-container'>
         <div>
         {data.slice(pages.begin, pages.stop).map((showData,index)=>
           <li key = { index } > {index + 1} . { showData.data }
@@ -74,7 +80,7 @@ export default class Home extends React.Component{
           </li>
         )}
         <button onClick = {()=>{this.multipage(1,0)}}>Previous</button>
-        <button onClick = {()=>{this.multipage(0,1)}}>next</button>      
+        <button onClick = {()=>{this.multipage(0,1)}}>next</button>
         </div>
 
         {/*<button onClick = {()=>{this.getData()}}>
@@ -84,6 +90,14 @@ export default class Home extends React.Component{
         <h3>Add Data</h3>
 
         <button onClick = {()=>{this.addData()}} >Add</button>
+
+        <style jsx>
+          {`
+            body {
+              background-color:pink;
+            }
+          `}
+        </style>
       </div>
     )
   }

@@ -1,6 +1,6 @@
 module.exports =
 data = {
-    temp : null,
+    moi : null,
     sw : false, //sw = switch, true == on, false == off
     nbip : null,
     nbport: null,

@@ -9,6 +9,7 @@ const socketIO = require ('socket.io')
 const bodyParser =require('body-parser')
 const sc = express()
 const port = config.SOCKET_PORT
+const axios = require('axios')
 
 sc.use(bodyParser.json())
 sc.use(bodyParser.urlencoded({
@@ -28,10 +29,11 @@ function listen(){
 
 	server.on("message", function (msg, rinfo) {
 		//console.log("server got: " + msg + " from " + rinfo.address + ":" + rinfo.port);
-		store.temp = msg.toString()
+		store.moi = msg.toString()
 		store.nbip = rinfo.address
 		store.nbport = rinfo.port
-		io.sockets.emit('nb', store.temp)
+		io.sockets.emit('nb', store.moi)
+		axios.post("http://localhost:5004/api/addData", { data:store.moi })
 		
 		var ack = new Buffer("Hello ack")
 		server.send(ack, 0, ack.length, rinfo.port, rinfo.address, function(err, bytes) {
