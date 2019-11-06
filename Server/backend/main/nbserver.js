@@ -28,7 +28,7 @@ function listen(){
 	})
 
 	server.on("message", async (msg, rinfo) => {
-		//console.log("server got: " + msg + " from " + rinfo.address + ":" + rinfo.port);
+		console.log("server got: " + msg + " from " + rinfo.address + ":" + rinfo.port);
 		store.moi = await msg.toString()
 		store.nbip = await rinfo.address
 		store.nbport = await rinfo.port
@@ -37,7 +37,7 @@ function listen(){
 		axios.post(await "http://localhost:5004/api/addData", { data:store.moi })
 		
 		var ack = new Buffer("Hello ack")
-		server.send(ack, 0, ack.length, rinfo.port, rinfo.address, function(err, bytes) {
+		await server.send(ack, 0, ack.length, rinfo.port, rinfo.address, function(err, bytes) {
 			console.log("sent ACK.")
 		})
 		//console.log(store);

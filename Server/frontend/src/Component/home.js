@@ -8,7 +8,7 @@ export default class Home extends React.Component{
       data:[],
       pages:{
         begin:0,
-        stop:5
+        stop:20
       }
     }
     this.addData = this.addData.bind(this)
@@ -52,15 +52,15 @@ export default class Home extends React.Component{
     let nextButton = this.state.pages.stop
 
     if(await previous && this.state.pages.begin != 0){
-      preButton = preButton - 5
-      nextButton = nextButton - 5
+      preButton = preButton - 10
+      nextButton = nextButton - 10
       this.setState({pages: {begin: preButton, stop: nextButton}})
       preButton = 0
       nextButton = 0
     }
     if(await next){
-      preButton = preButton + 5
-      nextButton = nextButton + 5
+      preButton = preButton + 10
+      nextButton = nextButton + 10
       this.setState({pages: {begin: preButton, stop: nextButton}})
       preButton = 0
       nextButton = 0
@@ -73,19 +73,27 @@ export default class Home extends React.Component{
     return(
       <div className = 'main-container'>
         <div>
+        <table>
+          <th>
+            <td>ID</td>
+            <td>อุณหภูมิ</td>
+            <td>ความชื้น</td>
+            <td>เวลา/วันที่</td>
+          </th>
+          
         {data.slice(pages.begin, pages.stop).map((showData,index)=>
-          <li key = { index } > {index + 1} . { showData.data }
+        <tr>
+          <td><li key = { index } > { showData.data }
           <button onClick = {()=>{this.deleteData(index)}}> Delete </button>
           <button onClick = {()=>{this.editData()} }> Edit </button>
-          </li>
+          </li></td>
+        </tr>          
         )}
+        </table>
+        
         <button onClick = {()=>{this.multipage(1,0)}}>Previous</button>
         <button onClick = {()=>{this.multipage(0,1)}}>next</button>
         </div>
-
-        {/*<button onClick = {()=>{this.getData()}}>
-          Click to show data
-        </button>*/}
 
         <h3>Add Data</h3>
 
@@ -95,6 +103,9 @@ export default class Home extends React.Component{
           {`
             body {
               background-color:pink;
+              table, th, td {
+                border: 1px solid black;
+              }
             }
           `}
         </style>
