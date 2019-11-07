@@ -15,7 +15,7 @@ function server(){
     }))
 
     const app = server.listen(port, function (err, result) {
-        console.log('running in port http://localhost:' + port)
+        console.log('SocketIO_API Start Om http://localhost: ' + port)
     })
 
     const io = socketIO.listen(app);

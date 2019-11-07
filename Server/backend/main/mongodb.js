@@ -23,7 +23,7 @@ function database(){
 
   let db = mongoose.connection;
 
-  db.once('open', () => console.log('connected to the database'));
+  db.once('open', () => console.log('MongoDB_API Connected to the database'));
 
   // checks if connection with the database is successful
   db.on('error', console.error.bind(console, 'MongoDB connection error:'));
@@ -87,5 +87,5 @@ function database(){
   app.use('/api', router);
 
   // launch our backend into a port
-  app.listen(API_PORT, () => console.log(`LISTENING ON PORT ${API_PORT}`));
+  app.listen(API_PORT, () => console.log(`MongoDB API Start On ${API_PORT}`));
 }

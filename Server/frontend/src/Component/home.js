@@ -15,7 +15,7 @@ export default class Home extends React.Component{
   }
 
   componentDidMount = () => {
-    this.interval = setInterval(()=>this.getData(),1000)
+    this.interval = setTimeout(this.getData(),10000)
   }
 
   getData = () => {
@@ -29,7 +29,8 @@ export default class Home extends React.Component{
   }
 
   addData = async () => {
-    await axios.post("http://localhost:5004/api/addData", { data:"3" })
+    let rand = Math.random()
+    await axios.post("http://localhost:5004/api/addData", { data:rand })
   }
 
   deleteData = async (index) => {
@@ -51,7 +52,7 @@ export default class Home extends React.Component{
     let preButton = this.state.pages.begin
     let nextButton = this.state.pages.stop
 
-    if(await previous && this.state.pages.begin != 0){
+    if(await previous && this.state.pages.begin !== 0){
       preButton = preButton - 10
       nextButton = nextButton - 10
       this.setState({pages: {begin: preButton, stop: nextButton}})
@@ -74,38 +75,40 @@ export default class Home extends React.Component{
       <div className = 'main-container'>
         <div>
         <table>
-          <th>
-            <td>ID</td>
-            <td>อุณหภูมิ</td>
-            <td>ความชื้น</td>
-            <td>เวลา/วันที่</td>
-          </th>
-          
+          <tr>
+            <th>ID</th>
+            <th>อุณหภูมิ</th>
+            <th>ความชื้น</th>
+            <th>เวลา/วันที่</th>
+            <th>คำสั่ง</th>
+          </tr>
         {data.slice(pages.begin, pages.stop).map((showData,index)=>
         <tr>
-          <td><li key = { index } > { showData.data }
-          <button onClick = {()=>{this.deleteData(index)}}> Delete </button>
-          <button onClick = {()=>{this.editData()} }> Edit </button>
-          </li></td>
-        </tr>          
+          <td><li key = { index }> {showData.id} </li></td>
+          <td>""</td>
+          <td> { showData.data } </td>
+          <td>{ showData.date }</td>
+          <td><button onClick = {()=>{this.deleteData(index)}}> Delete </button>
+          <button onClick = {()=>{this.editData(index)} }> Edit </button></td>
+        </tr>
         )}
         </table>
         
         <button onClick = {()=>{this.multipage(1,0)}}>Previous</button>
-        <button onClick = {()=>{this.multipage(0,1)}}>next</button>
+        <button onClick = {()=>{this.multipage(0,1)}}>Next</button>
         </div>
 
         <h3>Add Data</h3>
 
         <button onClick = {()=>{this.addData()}} >Add</button>
 
-        <style jsx>
+        <style jsx = "true">
           {`
             body {
-              background-color:pink;
-              table, th, td {
-                border: 1px solid black;
-              }
+              background-color:pink;              
+            }
+            table, th, td {
+              border: 1px solid black;
             }
           `}
         </style>

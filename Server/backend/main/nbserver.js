@@ -16,7 +16,7 @@ sc.use(bodyParser.urlencoded({
 	extended: true
 }))
 const app = sc.listen(port, function (err, result) {
-	console.log('running in port http://localhost:' + port)
+	console.log('SocketIO API Start On http://localhost:' + port)
 })
 
 const io = socketIO.listen(app);
@@ -45,7 +45,7 @@ function listen(){
 
 	server.on("listening", function () {
 		var address = server.address()
-		console.log("server listening " + address.address + ":" + address.port)
+		console.log("NB Iot API Start On : " + address.address + ":" + address.port)
 	})
 
 	server.bind({
