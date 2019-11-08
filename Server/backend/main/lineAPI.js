@@ -6,7 +6,7 @@ const port = process.env.PORT || 5006
 const LINE_SECRETE_TOKEN = require('../config').LINE_SECRETE_TOKEN
 
 require('dotenv').config()
-function line(){
+async function line(){
     console.log(`LineServerStartAtPort ${port}`)
     app.use(bodyParser.urlencoded({ extended: false }))
     app.use(bodyParser.json())
@@ -25,19 +25,19 @@ function line(){
             'Authorization': LINE_SECRETE_TOKEN
         }
 
-        let resMessage = (msg) => {
-            /*switch(msg){
+        let resMessage = async (msg) => {
+            switch(msg){
                 case 'สวัสดี': return 'สวัสดีมีอะไรให้เราช่วย'
                 break;
                 case 'ดูคำสั่ง': return  `1. ดูอุณหภูมิ \n2. ดูความชื้น \n3. ดูรูป`
                 break;
-                case 'ดูอุณหภูมิ' : return getData()
+                case 'ดูอุณหภูมิ' : return await getData()
                 break;
                 default : return 'โปรดพิมพ์ว่า "ดูคำสั่ง" เพื่อดูคำสั่งทั้งหมด'
-            }*/
-            if(msg == 'สวัสดี') return 'สวัสดีมีอะไรให้เราช่วย'
-            else if (msg == 'ดูอุณหภูมิ' || "1") return getData()
-            else return 'โปรดพิมพ์ว่า "ดูคำสั่ง" เพื่อดูคำสั่งทั้งหมด'
+            }
+            // if(msg == 'สวัสดี') return 'สวัสดีมีอะไรให้เราช่วย'
+            // else if (msg == 'ดูอุณหภูมิ' || "1") return getData()
+            // else return 'โปรดพิมพ์ว่า "ดูคำสั่ง" เพื่อดูคำสั่งทั้งหมด'
         }
 
         getData = async() => {
@@ -51,7 +51,7 @@ function line(){
             replyToken: reply_token,
             messages: [{
                 type: 'text',
-                text: resMessage(msg)
+                text: await resMessage(msg)
             }]
         })
 
