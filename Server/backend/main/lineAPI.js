@@ -28,10 +28,17 @@ function line(){
         let resMessage = (msg) => {
             switch(msg){
                 case 'สวัสดี': return 'สวัสดีมีอะไรให้เราช่วย'
-                case 'ดูคำสั่ง': return `1. ดูอุณหภูมิ \n2. ดูความชื้น \n3. ดูรูป`
+                break
+                case 'ดูคำสั่ง': return  `1. ดูอุณหภูมิ \n2. ดูความชื้น \n3. ดูรูป`
+                break
+                case 'ดูอุณหภูมิ' : return temp
+                break
                 default : return 'โปรดพิมพ์ว่า "ดูคำสั่ง" เพื่อดูคำสั่งทั้งหมด'
             }
         }
+
+        axios.get('http://localhost:5004/api/getData').then((res)=>{temp = JSON.stringify(res.data)})
+        var temp
         
         let body = await JSON.stringify({
             replyToken: reply_token,
