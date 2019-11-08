@@ -26,19 +26,26 @@ function line(){
         }
 
         let resMessage = (msg) => {
-            switch(msg){
+            /*switch(msg){
                 case 'สวัสดี': return 'สวัสดีมีอะไรให้เราช่วย'
-                break
+                break;
                 case 'ดูคำสั่ง': return  `1. ดูอุณหภูมิ \n2. ดูความชื้น \n3. ดูรูป`
-                break
-                case 'ดูอุณหภูมิ' : return temp
-                break
+                break;
+                case 'ดูอุณหภูมิ' : return getData()
+                break;
                 default : return 'โปรดพิมพ์ว่า "ดูคำสั่ง" เพื่อดูคำสั่งทั้งหมด'
-            }
+            }*/
+            if(msg == 'สวัสดี') return 'สวัสดีมีอะไรให้เราช่วย'
+            else if (msg == 'ดูอุณหภูมิ' || "1") return getData()
+            else return 'โปรดพิมพ์ว่า "ดูคำสั่ง" เพื่อดูคำสั่งทั้งหมด'
         }
 
-        axios.get('http://localhost:5004/api/getData').then((res)=>{temp = JSON.stringify(res.data)})
-        var temp
+        getData = async() => {
+            /*const get = await axios.get('http://localhost:5004/api/getData')
+            console.log(get.data[0])
+            return await JSON.stringify(get.data)*/
+            return 'hello'
+        }
         
         let body = await JSON.stringify({
             replyToken: reply_token,
