@@ -35,24 +35,23 @@ async function line(){
             //     break;
             //     default : return 'โปรดพิมพ์ว่า "ดูคำสั่ง" เพื่อดูคำสั่งทั้งหมด'
             // }
-            if(msg == 'เปิดแจ้งเตือน' || msg == "1") return await onBot(true)
-            else if(msg == 'ปิดแจ้งเตือน' || msg == "2") return await offBot(false)
-            else if(msg == 'สวัสดี') return 'สวัสดีมีอะไรให้เราช่วย'
-            else if (msg == 'ดูอุณหภูมิ' || msg == "3") return await getLastData()
-            else if (msg == 'ดูคำสั่ง'|| msg == 'help') return `1. ดูอุณหภูมิ \n2. ดูความชื้น \n3. ดูรูป`
-            else return 'โปรดพิมพ์ว่า "ดูคำสั่ง" เพื่อดูคำสั่งทั้งหมด'
+            if(await msg == 'เปิดแจ้งเตือน' || await msg == "1") return await onBot(true)
+            else if(await msg == 'ปิดแจ้งเตือน' || await msg == "2") return await offBot(false)
+            else if(await msg == 'สวัสดี') return await 'สวัสดีมีอะไรให้เราช่วย'
+            else if (await msg == 'ดูอุณหภูมิ' || await msg == "3") return await getLastData()
+            else if (await msg == 'ดูคำสั่ง'|| await msg == 'help') return await `1. ดูอุณหภูมิ \n2. ดูความชื้น \n3. ดูรูป`
+            else return await 'โปรดพิมพ์ว่า "ดูคำสั่ง" เพื่อดูคำสั่งทั้งหมด'
         }
 
         onBot = async(command) => {
-            await console.log('on')
+            await console.log(command)
         }
 
         offBot = async(command) => {
-            await console.log('off')
+            await console.log(command)
         }
 
         getLastData = async() => {
-            console.log('running')
             const get = await axios.get('http://localhost:5004/api/getData')
             console.log(await get.data[0].data)
             return await get.data[0].data

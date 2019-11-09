@@ -66,7 +66,7 @@ export default class Home extends React.Component{
       preButton = 0
       nextButton = 0
     }
-    console.log(await `previous: ${this.state.pages.begin} , next: ${this.state.pages.stop}`)
+    // console.log(await `previous: ${this.state.pages.begin} , next: ${this.state.pages.stop}`)
   }
 
   render(){
