@@ -26,25 +26,36 @@ async function line(){
         }
 
         let resMessage = async (msg) => {
-            switch(msg){
-                case 'สวัสดี': return 'สวัสดีมีอะไรให้เราช่วย'
-                break;
-                case 'ดูคำสั่ง': return  `1. ดูอุณหภูมิ \n2. ดูความชื้น \n3. ดูรูป`
-                break;
-                case 'ดูอุณหภูมิ' : return await getData()
-                break;
-                default : return 'โปรดพิมพ์ว่า "ดูคำสั่ง" เพื่อดูคำสั่งทั้งหมด'
-            }
-            // if(msg == 'สวัสดี') return 'สวัสดีมีอะไรให้เราช่วย'
-            // else if (msg == 'ดูอุณหภูมิ' || "1") return getData()
-            // else return 'โปรดพิมพ์ว่า "ดูคำสั่ง" เพื่อดูคำสั่งทั้งหมด'
+            // switch(msg){
+            //     case 'สวัสดี': return 'สวัสดีมีอะไรให้เราช่วย'
+            //     break;
+            //     case 'ดูคำสั่ง': return  `1. ดูอุณหภูมิ \n2. ดูความชื้น \n3. ดูรูป`
+            //     break;
+            //     case 'ดูอุณหภูมิ' : return await getData()
+            //     break;
+            //     default : return 'โปรดพิมพ์ว่า "ดูคำสั่ง" เพื่อดูคำสั่งทั้งหมด'
+            // }
+            if(msg == 'เปิดแจ้งเตือน' || msg == "1") return await onBot(true)
+            else if(msg == 'ปิดแจ้งเตือน' || msg == "2") return await offBot(false)
+            else if(msg == 'สวัสดี') return 'สวัสดีมีอะไรให้เราช่วย'
+            else if (msg == 'ดูอุณหภูมิ' || msg == "3") return await getLastData()
+            else if (msg == 'ดูคำสั่ง'|| msg == 'help') return `1. ดูอุณหภูมิ \n2. ดูความชื้น \n3. ดูรูป`
+            else return 'โปรดพิมพ์ว่า "ดูคำสั่ง" เพื่อดูคำสั่งทั้งหมด'
         }
 
-        getData = async() => {
-            /*const get = await axios.get('http://localhost:5004/api/getData')
-            console.log(get.data[0])
-            return await JSON.stringify(get.data)*/
-            return 'hello'
+        onBot = async(command) => {
+            await console.log('on')
+        }
+
+        offBot = async(command) => {
+            await console.log('off')
+        }
+
+        getLastData = async() => {
+            console.log('running')
+            const get = await axios.get('http://localhost:5004/api/getData')
+            console.log(await get.data[0].data)
+            return await get.data[0].data
         }
         
         let body = await JSON.stringify({
