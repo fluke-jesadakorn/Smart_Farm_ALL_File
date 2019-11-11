@@ -1,5 +1,5 @@
-module.exports ={database}
-function database(){
+module.exports = { database }
+function database() {
   require('dotenv').config()
   const mongoose = require('mongoose');
   const express = require('express');
@@ -37,15 +37,15 @@ function database(){
   // this is our get method
   // this method fetches all available data in our database
   router.get('/getData', async (req, res) => {
-      let getData = await SchemaFarm.find()
-      await res.status(200).json(getData)
+    let getData = await SchemaFarm.find()
+    await res.status(200).json(getData)
   })
 
   // this is our update method
   // this method overwrites existing data in our database
   router.post('/updateData', (req, res) => {
     const { id, update } = req.body;
-      SchemaFarm.findByIdAndUpdate(id, update, (err) => {
+    SchemaFarm.findByIdAndUpdate(id, update, (err) => {
       if (err) return res.json({ success: false, error: err });
       return res.json({ success: true });
     });
@@ -55,8 +55,8 @@ function database(){
   // this method removes existing data in our database
   router.delete('/deleteData', async (req, res) => {
     let deleteIndex = await req.body.params
-    await SchemaFarm.remove({id:deleteIndex})
-    res.status(200).json({status:"success"})
+    await SchemaFarm.remove({ id: deleteIndex })
+    res.status(200).json({ status: "success" })
   });
 
   // this is our create methid
@@ -64,24 +64,24 @@ function database(){
   router.post('/addData', async (req, res) => {
     try {
       let getList = await SchemaFarm.find()
-      let getCurrentId = await getList.map((id)=>{return id.id})
+      let getCurrentId = await getList.map((id) => { return id.id })
       let CurrentId = await Math.max.apply(null, getCurrentId)
-      if(CurrentId == -Infinity)
+      if (CurrentId == -Infinity)
         CurrentId = 0
       else
         CurrentId++
       let JsonData = await req.body.data
       let date = await new Date()
-      let addData = await new SchemaFarm({ id : CurrentId, data : JsonData, date : date })
+      let addData = await new SchemaFarm({ id: CurrentId, data: JsonData, date: date })
       await addData.save()
-      await res.status(200).json({status:"success"})
-    }catch(err){
-      res.status(400).json({status:"Cannot insert data : " + err})
+      await res.status(200).json({ status: "success" })
+    } catch (err) {
+      res.status(400).json({ status: "Cannot insert data : " + err })
     }
   });
 
-  router.get('/button',(req,res)=>{
-      console.log(req.body)
+  router.get('/button', (req, res) => {
+    console.log(req.body)
   })
   // append /api for our http requests
   app.use('/api', router);

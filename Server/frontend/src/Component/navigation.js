@@ -33,22 +33,22 @@ export default class Navigation extends React.Component {
 
   render() {
     return (
-    <Router>      
-      <div>
-        <BackgroungNav>
-          <NavBtn><Link to="/">HOME</Link></NavBtn>
-          <NavBtn><Link to="/graph">GRAPH</Link></NavBtn>    
-          <NavBtn><Link to="/control">CONTROL</Link></NavBtn>    
-          <NavBtn><Link to="/profile">PROFILE</Link></NavBtn>
-        </BackgroungNav> 
-        <Switch>
-          <Route path="/" exact component={home}/>
-          <Route path="/graph/" component={graph} />
-          <Route path="/control/" component={control} />
-          <Route path="/profile/" component={profile} />
-        </Switch>
-      </div>
-    </Router>
+      <Router>
+        <div>
+          <BackgroungNav>
+            <NavBtn><Link to="/">HOME</Link></NavBtn>
+            <NavBtn><Link to="/graph">GRAPH</Link></NavBtn>
+            <NavBtn><Link to="/control">CONTROL</Link></NavBtn>
+            <NavBtn><Link to="/profile">PROFILE</Link></NavBtn>
+          </BackgroungNav>
+          <Switch>
+            <Route path="/" exact component={home} />
+            <Route path="/graph/" component={graph} />
+            <Route path="/control/" component={control} />
+            <Route path="/profile/" component={profile} />
+          </Switch>
+        </div>
+      </Router>
     );
   }
 }
