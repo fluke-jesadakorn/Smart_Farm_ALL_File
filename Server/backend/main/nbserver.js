@@ -36,7 +36,7 @@ function listen(){
 		console.log(await msg)
 		axios.post(await "http://localhost:5004/api/addData", { data:store.moi })
 		
-		var ack = new Buffer("Hello ack")
+		var ack = new Buffer("0")
 		await server.send(ack, 0, ack.length, rinfo.port, rinfo.address, function(err, bytes) {
 			console.log("sent ACK.")
 		})

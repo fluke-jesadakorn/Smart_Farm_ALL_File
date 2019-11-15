@@ -63,6 +63,6 @@ void loop() {
   Serial.println(sensorValue);
 
   // delay of one second
-  delay(20000);
-  UDPReceive resp = AISnb.waitResponse();                     
+  delay(1000);
+  UDPReceive resp = AISnb.waitResponse();
 }
