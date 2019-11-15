@@ -9,12 +9,12 @@ function getRandomInt(max) {
 */
 export default class App extends Component {
 	constructor(props) {
-    	super(props)
+		super(props)
 
-    	this.state = {
-				endpoint : config.SOCKET_URL,
-      	options: {
-        chart: {
+		this.state = {
+			endpoint: config.SOCKET_URL,
+			options: {
+				chart: {
 					id: "line",
 					animations: {
 						enabled: true,
@@ -29,34 +29,35 @@ export default class App extends Component {
 							speed: 500
 						}
 					}
-        },
-        xaxis: {
-          categories: []
-        }
-      },
-      series: [
-        {
-          name: "temp",
-          data: []
-        }
-      ]
-	};
-  }
+				},
+				xaxis: {
+					categories: []
+				}
+			},
+			series: [
+				{
+					name: "temp",
+					data: []
+				}
+			]
+		};
+	}
 
 	add = (json) => {
 		let temp = this.state.series[0].data
-		if(temp.length > 9){
+		if (temp.length > 9) {
 			temp.shift()
 		}
 		let concat = temp.concat(json)
-		this.setState({series:[{data:concat}]})
+		this.setState({ series: [{ data: concat }] })
 		console.log(json)
 	}
 
 	soc = () => {
-		const {endpoint} = this.state
+		const { endpoint } = this.state
 		const socket = socketIOClient(endpoint)
-		socket.on("nb" , (json) => {this.add(json)
+		socket.on("nb", (json) => {
+			this.add(json)
 		})
 	}
 
@@ -67,14 +68,14 @@ export default class App extends Component {
 
 	render() {
 		return (
-				<div>
+			<div>
 				<Chart
 					options={this.state.options}
 					series={this.state.series}
 					type="line"
 					width="500"
 				/>
-				</div>
-				);
-		}
+			</div>
+		);
+	}
 }

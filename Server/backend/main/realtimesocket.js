@@ -1,9 +1,9 @@
-module.exports = {server} 
-function server(){
-    var express = require('express') 
-    var bodyParser =require('body-parser') 
-    var http = require('http') 
-    var socketIO =require ('socket.io')
+module.exports = { server }
+function server() {
+    var express = require('express')
+    var bodyParser = require('body-parser')
+    var http = require('http')
+    var socketIO = require('socket.io')
     var store = require('./store')
 
     const server = express()
@@ -22,7 +22,7 @@ function server(){
     // รอการ connect จาก client
     io.on('connection', client => {
         console.log('user connected')
-    
+
         // เมื่อ Client ตัดการเชื่อมต่อ
         client.on('disconnect', () => {
             console.log('user disconnected')
@@ -33,6 +33,6 @@ function server(){
             //ส่งข้อความที่รอรับจาก client
             io.sockets.emit('new-message', message)
             //เอา Temp กระจายทุก client
-        })  
+        })
     })
 }

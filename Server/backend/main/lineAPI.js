@@ -6,7 +6,7 @@ const port = process.env.PORT || 5006
 const LINE_SECRETE_TOKEN = require('../config').LINE_SECRETE_TOKEN
 
 require('dotenv').config()
-async function line(){
+async function line() {
     console.log(`LineServerStartAtPort ${port}`)
     app.use(bodyParser.urlencoded({ extended: false }))
     app.use(bodyParser.json())
@@ -35,28 +35,28 @@ async function line(){
             //     break;
             //     default : return 'โปรดพิมพ์ว่า "ดูคำสั่ง" เพื่อดูคำสั่งทั้งหมด'
             // }
-            if(await msg == 'เปิดแจ้งเตือน' || await msg == "1") return await onBot(true)
-            else if(await msg == 'ปิดแจ้งเตือน' || await msg == "2") return await offBot(false)
-            else if(await msg == 'สวัสดี') return await 'สวัสดีมีอะไรให้เราช่วย'
+            if (await msg == 'เปิดแจ้งเตือน' || await msg == "1") return await onBot(true)
+            else if (await msg == 'ปิดแจ้งเตือน' || await msg == "2") return await offBot(false)
+            else if (await msg == 'สวัสดี') return await 'สวัสดีมีอะไรให้เราช่วย'
             else if (await msg == 'ดูอุณหภูมิ' || await msg == "3") return await getLastData()
-            else if (await msg == 'ดูคำสั่ง'|| await msg == 'help') return await `1. ดูอุณหภูมิ \n2. ดูความชื้น \n3. ดูรูป`
+            else if (await msg == 'ดูคำสั่ง' || await msg == 'help') return await `1. ดูอุณหภูมิ \n2. ดูความชื้น \n3. ดูรูป`
             else return await 'โปรดพิมพ์ว่า "ดูคำสั่ง" เพื่อดูคำสั่งทั้งหมด'
         }
 
-        onBot = async(command) => {
+        onBot = async (command) => {
             await console.log(command)
         }
 
-        offBot = async(command) => {
+        offBot = async (command) => {
             await console.log(command)
         }
 
-        getLastData = async() => {
+        getLastData = async () => {
             const get = await axios.get('http://localhost:5004/api/getData')
             console.log(await get.data[0].data)
             return await get.data[0].data
         }
-        
+
         let body = await JSON.stringify({
             replyToken: reply_token,
             messages: [{
@@ -73,4 +73,4 @@ async function line(){
         })
     }
 }
-module.exports = {line}
+module.exports = { line }

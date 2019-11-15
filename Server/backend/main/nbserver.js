@@ -1,12 +1,12 @@
-module.exports = {listen}
+module.exports = { listen }
 require('dotenv').config()
 const config = require('../config')
-const express = require('express') 
+const express = require('express')
 const store = require('./store')
 const dgram = require("dgram")
 const server = dgram.createSocket("udp4")
-const socketIO = require ('socket.io')
-const bodyParser =require('body-parser')
+const socketIO = require('socket.io')
+const bodyParser = require('body-parser')
 const sc = express()
 const port = config.SOCKET_PORT
 const axios = require('axios')
@@ -21,7 +21,7 @@ const app = sc.listen(port, function (err, result) {
 
 const io = socketIO.listen(app);
 
-function listen(){
+function listen() {
 	server.on("error", function (err) {
 		console.log("server error:\n" + err.stack);
 		server.close()
