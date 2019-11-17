@@ -29,9 +29,9 @@ void setup()
   delay(1000);
   
   pingRESP pingR = AISnb.pingIP(serverIP);
+  
+  pinMode(8, OUTPUT);
   previousMillis = millis();
-  pinMode(8, OUTPUT)
-
 }
 void loop() {
     unsigned long currentMillis = millis();
