@@ -31,8 +31,8 @@ async function line() {
             else if (await msg == 'ปิดแจ้งเตือน' || await msg == "2") return await offBot(false)
             else if (await msg == 'สวัสดี') return await 'สวัสดีมีอะไรให้เราช่วย'
             else if (await msg == 'ดูอุณหภูมิ' || await msg == "3") return await getLastData()
-            else if (await msg == 'ปิดน้ำ' || await msg == "4") return await SendSW.sendBtSwToLine(false) && "ปิดน้ำแล้ว"
-            else if (await msg == 'เปิดน้ำ' || await msg == "5") return await SendSW.sendBtSwToLine(true) && "ปิดน้ำแล้ว"
+            else if (await msg == 'ปิดน้ำ' || await msg == "4") {await SendSW.sendBtSwToLine(false); return await "ปิดน้ำแล้ว";}
+            else if (await msg == 'เปิดน้ำ' || await msg == "5") {await SendSW.sendBtSwToLine(true); return await "เปิดน้ำแล้ว";}
             else if (await msg == 'ดูคำสั่ง' || await msg == 'help') return await `1. ดูอุณหภูมิ \n2. ดูความชื้น \n3. ดูรูป \n4. ปิดน้ำ \n5. เปิดน้ำ`
             else return await 'โปรดพิมพ์ว่า "ดูคำสั่ง" เพื่อดูคำสั่งทั้งหมด'
         }
