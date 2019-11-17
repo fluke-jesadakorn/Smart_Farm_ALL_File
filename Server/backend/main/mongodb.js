@@ -6,8 +6,8 @@ function database() {
   const cors = require('cors');
   const bodyParser = require('body-parser');
   const logger = require('morgan');
-  const store = require('./store')
   const SchemaFarm = require('./SchemaFarm');
+  const SendSw = require('./nbserver')
 
   const API_PORT = 5004;
   const app = express();
@@ -81,7 +81,8 @@ function database() {
   });
 
   router.post('/button', (req, res) => {
-    console.log(req.body.command)
+    //console.log(req.body.command)
+    SendSw.sendBtSwToLine(req.body.command)
   })
   // append /api for our http requests
   app.use('/api', router);
