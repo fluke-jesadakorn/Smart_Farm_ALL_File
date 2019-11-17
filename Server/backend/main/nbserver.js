@@ -1,4 +1,4 @@
-module.exports = { listen, sendBtSwToLine }
+module.exports = { listen }
 require('dotenv').config()
 const config = require('../01_backend_config')
 const express = require('express')
@@ -33,13 +33,29 @@ function listen() {
 		store.nbip = rinfo.address
 		store.nbport = rinfo.port
 		io.sockets.emit('nb', store.moi)
-		console.log(msg)
+		console.log(store.moi)
 		axios.post("http://localhost:5004/api/addData", { data: store.moi })
 
-		var ack = new Buffer("0")
-		server.send(ack, 0, ack.length, rinfo.port, rinfo.address, function (err, bytes) {
-			console.log("sent ACK.")
-		})
+		// var ack = new Buffer("00")
+		// server.send(ack, 0, ack.length, rinfo.port, rinfo.address, function (err, bytes) {
+		// 	console.log("sent ACK. 0 ")
+		// })
+		var ack0 = new Buffer("0")
+		var ack1 = new Buffer("1")
+
+		SendSW = (sw) => {
+			if (sw == false) {
+				server.send(ack0, 0, ack0.length, rinfo.port, rinfo.address, function (err, bytes) {
+					console.log("sent SW = 0.")
+					console.log(store.nbip + ":" + store.nbport)
+				})
+			}
+			else if (sw == true) server.send(ack1, 0, rinfo.port, rinfo.address, store.nbip, function (err, bytes) {
+				console.log("sent SW = 1.")
+				console.log(store.nbip + ":" + store.nbport)
+			})
+		}
+
 	})
 
 	server.on("listening", function () {
@@ -52,18 +68,4 @@ function listen() {
 		port: config.NB_PORT,
 		exclusive: true
 	});
-}
-
-function sendBtSwToLine(sw) {
-	let ack0 = new Buffer("0")
-	let ack1 = new Buffer("1")
-
-	if (sw == false) {
-		server.send(ack0, 0, ack0.length, store.nbport , store.nbip, function (err, bytes) {
-			console.log("sent SW = 0.")
-		})
-	}
-	else server.send(ack1, 0, ack1.length, store.nbport, store.nbip, function (err, bytes) {
-		console.log("sent SW = 1.")
-	})
 }
