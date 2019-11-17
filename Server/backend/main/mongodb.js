@@ -81,7 +81,6 @@ function database() {
   });
 
   router.post('/button', (req, res) => {
-    //console.log(req.body.command)
     SendSw.sendBtSwToLine(req.body.command)
   })
   // append /api for our http requests

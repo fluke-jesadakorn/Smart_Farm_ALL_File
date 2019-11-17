@@ -58,7 +58,7 @@ function sendBtSwToLine(sw) {
 	let ack0 = new Buffer("0")
 	let ack1 = new Buffer("1")
 
-	if (sw == true) {
+	if (sw == false) {
 		server.send(ack0, 0, ack0.length, store.nbport , store.nbip, function (err, bytes) {
 			console.log("sent SW = 0.")
 		})
