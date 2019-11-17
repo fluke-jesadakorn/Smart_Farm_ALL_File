@@ -80,8 +80,8 @@ function database() {
     }
   });
 
-  router.get('/button', (req, res) => {
-    console.log(req.body)
+  router.post('/button', (req, res) => {
+    console.log(req.body.command)
   })
   // append /api for our http requests
   app.use('/api', router);

@@ -1,6 +1,6 @@
 module.exports = { listen }
 require('dotenv').config()
-const config = require('../config')
+const config = require('../backend_config')
 const express = require('express')
 const store = require('./store')
 const dgram = require("dgram")
@@ -10,6 +10,8 @@ const bodyParser = require('body-parser')
 const sc = express()
 const port = config.SOCKET_PORT
 const axios = require('axios')
+
+var keepTemp
 
 sc.use(bodyParser.json())
 sc.use(bodyParser.urlencoded({
@@ -42,6 +44,7 @@ function listen() {
 		})
 		//console.log(store);
 	})
+
 
 	server.on("listening", function () {
 		var address = server.address()

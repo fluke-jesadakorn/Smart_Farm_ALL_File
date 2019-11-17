@@ -3,7 +3,7 @@ const bodyParser = require('body-parser')
 const axios = require('axios')
 const app = express()
 const port = process.env.PORT || 5006
-const LINE_SECRETE_TOKEN = require('../config').LINE_SECRETE_TOKEN
+const LINE_SECRETE_TOKEN = require('../backend_config').LINE_SECRETE_TOKEN
 
 require('dotenv').config()
 async function line() {
@@ -26,15 +26,6 @@ async function line() {
         }
 
         let resMessage = async (msg) => {
-            // switch(msg){
-            //     case 'สวัสดี': return 'สวัสดีมีอะไรให้เราช่วย'
-            //     break;
-            //     case 'ดูคำสั่ง': return  `1. ดูอุณหภูมิ \n2. ดูความชื้น \n3. ดูรูป`
-            //     break;
-            //     case 'ดูอุณหภูมิ' : return await getData()
-            //     break;
-            //     default : return 'โปรดพิมพ์ว่า "ดูคำสั่ง" เพื่อดูคำสั่งทั้งหมด'
-            // }
             if (await msg == 'เปิดแจ้งเตือน' || await msg == "1") return await onBot(true)
             else if (await msg == 'ปิดแจ้งเตือน' || await msg == "2") return await offBot(false)
             else if (await msg == 'สวัสดี') return await 'สวัสดีมีอะไรให้เราช่วย'

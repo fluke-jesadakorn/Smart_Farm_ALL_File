@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Chart from "react-apexcharts";
 import socketIOClient from "socket.io-client"
-import config from "../config"
+import config from "../frontend_config"
 /*
 function getRandomInt(max) {
 	return Math.floor(Math.random() * Math.floor(max));
