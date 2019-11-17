@@ -40,11 +40,11 @@ async function line() {
                 return await getLastData()
             }
             else if (await msg == 'ปิดน้ำ' || await msg == "4") {
-                await SendSW.sendBtSwToLine(false);
+                await SendSW.listen.SendSW(false);
                 return await "ปิดน้ำแล้ว";
             }
             else if (await msg == 'เปิดน้ำ' || await msg == "5") {
-                await SendSW.sendBtSwToLine(true);
+                await SendSW.listen.SendSW(true);
                 return await "เปิดน้ำแล้ว";
             }
             else if (await msg == 'ดูคำสั่ง' || await msg == 'help' || await msg == '?') {

@@ -21,7 +21,7 @@ const app = sc.listen(port, function (err, result) {
 
 const io = socketIO.listen(app);
 
-function listen(sw) {
+function listen() {
 	server.on("error", function (err) {
 		console.log("server error:\n" + err.stack);
 		server.close()
@@ -43,17 +43,19 @@ function listen(sw) {
 		var ack0 = new Buffer("0")
 		var ack1 = new Buffer("1")
 
-		if (sw == false) {
-			server.send(ack0, 0, ack0.length, store.nbport, store.nbip, function (err, bytes) {
-				console.log("sent SW = 0.")
+		SendSW = (sw) => {
+			if (sw == false) {
+				server.send(ack0, 0, ack0.length, rinfo.port, rinfo.address, function (err, bytes) {
+					console.log("sent SW = 0.")
+					console.log(store.nbip + ":" + store.nbport)
+				})
+			}
+			else if (sw == true) server.send(ack1, 0, rinfo.port, rinfo.address, store.nbip, function (err, bytes) {
+				console.log("sent SW = 1.")
 				console.log(store.nbip + ":" + store.nbport)
 			})
 		}
-		else if(sw == true) server.send(ack1, 0, ack1.length, store.nbport, store.nbip, function (err, bytes) {
-			console.log("sent SW = 1.")
-			console.log(store.nbip + ":" + store.nbport)
-		})
-		
+
 	})
 
 	server.on("listening", function () {
