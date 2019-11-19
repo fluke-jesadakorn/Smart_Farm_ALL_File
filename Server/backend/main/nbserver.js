@@ -19,7 +19,9 @@ const app = sc.listen(port, function (err, result) {
 })
 
 const io = socketIO.listen(app);
-var store = { moi: [], nbip: [], nbport: [] };
+var store = { 
+	moi: [], nbip: [], nbport: [] 
+};
 function LineSw(data) {
 	switch (data.type) {
 		case "setMoi": {
