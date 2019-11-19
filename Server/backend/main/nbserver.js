@@ -58,7 +58,7 @@ function listen() {
 			type: "setNbPort",
 			payload: rinfo.port
 		})
-		io.sockets.emit('nb', store.moi)
+		io.sockets.emit('nb', LineSw({ type: "getMoi" }))
 		axios.post("http://localhost:5004/api/addData", { data: LineSw({ type: "getMoi" }) })
 
 		// var ack = new Buffer("1")
@@ -81,7 +81,7 @@ function listen() {
 
 function sendSw(sw) {
 	let res = sw == true ? sw = "1" : sw = "0";
-	server.send(res, 0, res.length, store.nbport, store.nbip, function (err, bytes){
-		console.log("res is : " + res)
+	server.send(res, 0, res.length, store.nbport, store.nbip, function (err, bytes) {
+		console.log("res is : " + res + "to " + store.nbip + ": " + store.nbport)
 	})
 }
