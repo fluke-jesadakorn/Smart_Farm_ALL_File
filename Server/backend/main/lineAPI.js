@@ -5,8 +5,6 @@ const app = express()
 const port = process.env.PORT || 5006
 const LINE_SECRETE_TOKEN = require('../01_backend_config').LINE_SECRETE_TOKEN
 const NBserver = require('./nbserver')
-var Send = require('./nbserver').SendSW
-
 require('dotenv').config()
 async function line() {
     console.log(`LineServerStartAtPort ${port}`)
@@ -41,11 +39,11 @@ async function line() {
                 return await getLastData()
             }
             else if (await msg == 'ปิดน้ำ' || await msg == "4") {
-                await Send(false)
+                await Send
                 return await "ปิดน้ำแล้ว";
             }
             else if (await msg == 'เปิดน้ำ' || await msg == "5") {
-                await Send(true)
+                // await Send(true);
                 return await "เปิดน้ำแล้ว";
             }
             else if (await msg == 'ดูคำสั่ง' || await msg == 'help' || await msg == '?') {

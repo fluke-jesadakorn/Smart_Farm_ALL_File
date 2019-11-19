@@ -20,6 +20,15 @@ const app = sc.listen(port, function (err, result) {
 })
 
 const io = socketIO.listen(app);
+function LineSw(data) {
+	let state = { moi: [], nbip, nbport };
+	switch (data.type) {
+		case "setMoi": state.moi = data.payload
+		case "setNbip": state.nbip = data.payload
+		case "nbPort": state.nbport = data.payload
+		case "getData ": return state.moi
+	}
+}
 
 function listen() {
 	server.on("error", function (err) {
@@ -29,19 +38,26 @@ function listen() {
 
 	server.on("message", (msg, rinfo) => {
 		console.log("server got: " + msg + " from " + rinfo.address + ":" + rinfo.port);
-		store.moi = msg.toString()
-		store.nbip = rinfo.address
-		store.nbport = rinfo.port
+		LineSw({
+			type:"setMoi",
+			payload:msg.toString()
+		})
+		LineSw({
+			type:"setNbip",
+			payload : rinfo.address
+		})
+		LineSw({
+			type:"nbPort",
+			payload : rinfo.port
+		})
 		io.sockets.emit('nb', store.moi)
 		console.log(store.moi)
 		axios.post("http://localhost:5004/api/addData", { data: store.moi })
 
-		// var ack = new Buffer("00")
-		// server.send(ack, 0, ack.length, rinfo.port, rinfo.address, function (err, bytes) {
-		// 	console.log("sent ACK. 0 ")
-		// })
-
-
+		var ack = new Buffer(getLineSw())
+		server.send(ack, 0, ack.length, rinfo.port, rinfo.address, function (err, bytes) {
+			console.log("sent ACK. 0 ")
+		})
 	})
 
 	server.on("listening", function () {
@@ -54,19 +70,4 @@ function listen() {
 		port: config.NB_PORT,
 		exclusive: true
 	});
-}
-
-module.export = function SendSW (sw) {
-	var ack0 = new Buffer("0")
-	var ack1 = new Buffer("1")
-	if (sw == false) {
-		server.send(ack0, 0, ack0.length, rinfo.port, rinfo.address, function (err, bytes) {
-			console.log("sent SW = 0.")
-			console.log(store.nbip + ":" + store.nbport)
-		})
-	}
-	else if (sw == true) server.send(ack1, 0, rinfo.port, rinfo.address, store.nbip, function (err, bytes) {
-		console.log("sent SW = 1.")
-		console.log(store.nbip + ":" + store.nbport)
-	})
 }
