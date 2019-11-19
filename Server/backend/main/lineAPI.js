@@ -4,7 +4,7 @@ const axios = require('axios')
 const app = express()
 const port = process.env.PORT || 5006
 const LINE_SECRETE_TOKEN = require('../01_backend_config').LINE_SECRETE_TOKEN
-const SendSW = require('./nbserver')
+const NBserver = require('./nbserver')
 
 require('dotenv').config()
 async function line() {
@@ -40,11 +40,11 @@ async function line() {
                 return await getLastData()
             }
             else if (await msg == 'ปิดน้ำ' || await msg == "4") {
-                await SendSW.listen.SendSW(false);
+                await NBserver.SendSW
                 return await "ปิดน้ำแล้ว";
             }
             else if (await msg == 'เปิดน้ำ' || await msg == "5") {
-                await SendSW.listen.SendSW(true);
+                await NBserver.SendSW
                 return await "เปิดน้ำแล้ว";
             }
             else if (await msg == 'ดูคำสั่ง' || await msg == 'help' || await msg == '?') {
