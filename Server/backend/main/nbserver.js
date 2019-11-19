@@ -56,7 +56,7 @@ function listen() {
 	});
 }
 
-export function SendSW (sw) {
+module.export = function SendSW (sw) {
 	var ack0 = new Buffer("0")
 	var ack1 = new Buffer("1")
 	if (sw == false) {
