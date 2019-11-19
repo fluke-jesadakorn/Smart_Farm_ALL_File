@@ -1,4 +1,4 @@
-module.exports = { listen, SendSW }
+module.exports = { listen }
 require('dotenv').config()
 const config = require('../01_backend_config')
 const express = require('express')
@@ -56,7 +56,7 @@ function listen() {
 	});
 }
 
-function SendSW (sw) {
+export function SendSW (sw) {
 	var ack0 = new Buffer("0")
 	var ack1 = new Buffer("1")
 	if (sw == false) {
