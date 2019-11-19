@@ -1,8 +1,7 @@
-module.exports = { listen }
+module.exports = { listen, sendSw }
 require('dotenv').config()
 const config = require('../01_backend_config')
 const express = require('express')
-const store = require('./store')
 const dgram = require("dgram")
 const server = dgram.createSocket("udp4")
 const socketIO = require('socket.io')
@@ -20,13 +19,19 @@ const app = sc.listen(port, function (err, result) {
 })
 
 const io = socketIO.listen(app);
+var store = { moi: [], nbip: [], nbport: [] };
 function LineSw(data) {
-	let state = { moi: [], nbip, nbport };
 	switch (data.type) {
-		case "setMoi": state.moi = data.payload
-		case "setNbip": state.nbip = data.payload
-		case "nbPort": state.nbport = data.payload
-		case "getData ": return state.moi
+		case "setMoi": {
+			store.moi = data.payload
+		}
+		case "setNbip": {
+			store.nbip = data.payload
+		}
+		case "setNbPort": {
+			store.nbport = data.payload
+		}
+		case "getMoi": return store.moi
 	}
 }
 
@@ -39,25 +44,25 @@ function listen() {
 	server.on("message", (msg, rinfo) => {
 		console.log("server got: " + msg + " from " + rinfo.address + ":" + rinfo.port);
 		LineSw({
-			type:"setMoi",
-			payload:msg.toString()
+			type: "setMoi",
+			payload: msg.toString()
+		})
+
+		LineSw({
+			type: "setNbip",
+			payload: rinfo.address
 		})
 		LineSw({
-			type:"setNbip",
-			payload : rinfo.address
-		})
-		LineSw({
-			type:"nbPort",
-			payload : rinfo.port
+			type: "setNbPort",
+			payload: rinfo.port
 		})
 		io.sockets.emit('nb', store.moi)
-		console.log(store.moi)
-		axios.post("http://localhost:5004/api/addData", { data: store.moi })
+		axios.post("http://localhost:5004/api/addData", { data: LineSw({ type: "getMoi" }) })
 
-		var ack = new Buffer(getLineSw())
-		server.send(ack, 0, ack.length, rinfo.port, rinfo.address, function (err, bytes) {
-			console.log("sent ACK. 0 ")
-		})
+		// var ack = new Buffer("1")
+		// server.send(ack, 0, ack.length, rinfo.port, rinfo.address, function (err, bytes) {
+		// 	console.log("sent ACK. 0 ")
+		// })
 	})
 
 	server.on("listening", function () {
@@ -70,4 +75,11 @@ function listen() {
 		port: config.NB_PORT,
 		exclusive: true
 	});
+}
+
+function sendSw(sw) {
+	let res = sw == true ? sw = "1" : sw = "0";
+	server.send(res, 0, res.length, store.nbport, store.nbip, function (err, bytes){
+		console.log("res is : " + res)
+	})
 }
