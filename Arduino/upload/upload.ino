@@ -29,11 +29,6 @@ void loop() {
       UDPSend udp = AISnb.sendUDPmsgStr(serverIP, serverPort, String(sensorValue));
       Serial.print("Moisture Value = " );
       Serial.println(sensorValue);
-//      Serial.println("tempSw is " + tempSw);
-//      if(tempSW != AISnb.sw.toInt()) {
-//        tempSW = AISnb.sw.toInt();
-//      }
-
       previousMillis = currentMillis; 
     }    
     UDPReceive resp = AISnb.waitResponse();
