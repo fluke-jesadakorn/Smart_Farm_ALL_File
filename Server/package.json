@@ -49,7 +49,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },"engines": {
+  },
+  "engines": {
     "node": "13.2.0"
-  }
+  },
+  "heroku-prebuild" : "npm install -g nodemon concurrently"
 }
