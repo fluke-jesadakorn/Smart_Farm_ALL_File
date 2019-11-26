@@ -20,7 +20,7 @@
     "socket.io": "^2.3.0"
   },
   "scripts": {
-    "start": "cd client && npm install && npm run build && cd ../ && node index.js",
+    "start": "cd client && npm install && npm run build && cd ../ && npm install && node index.js",
     "heroku-postbuild": "cd client && npm install && npm run build",
     "client": "npm start --prefix client",
     "server": "node index.js",
