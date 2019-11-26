@@ -8,18 +8,15 @@ function database() {
   const logger = require('morgan');
   const SchemaFarm = require('./SchemaFarm');
   const SendSw = require('./nbserver')
+  const path = require('path');
 
-  const API_PORT = 5004;
+  const PORT = process.env.PORT || 5004;
   const app = express();
   app.use(cors());
   const router = express.Router();
 
-  // this is our MongoDB database
-  const dbRoute =
-    'mongodb://61.19.181.29:5000/SmartFarm';
-
   // connects our back end code with the database
-  mongoose.connect(dbRoute, { useNewUrlParser: true });
+  mongoose.connect('mongodb+srv://iflukej:Ff0813780670@smartfarm-euxel.gcp.mongodb.net/test?retryWrites=true&w=majority/SmartFarm', { useNewUrlParser: true });
 
   let db = mongoose.connection;
 
@@ -55,8 +52,8 @@ function database() {
   // this method removes existing data in our database
   router.delete('/deleteData', async (req, res) => {
     let deleteIndex = await req.body.params
-    await SchemaFarm.remove({ id: deleteIndex })
-    res.status(200).json({ status: "success" })
+    await SchemaFarm.deleteOne({ id: deleteIndex })
+    await res.status(200).json({ status: "success" })
   });
 
   // this is our create methid
@@ -83,9 +80,10 @@ function database() {
   router.post('/button', (req, res) => {
     SendSw.sendBtSwToLine(req.body.command)
   })
+
   // append /api for our http requests
   app.use('/api', router);
 
   // launch our backend into a port
-  app.listen(API_PORT, () => console.log(`MongoDB API Start On ${API_PORT}`));
+  app.listen(PORT, () => console.log(`MongoDB API Start On ${PORT}`));
 }
