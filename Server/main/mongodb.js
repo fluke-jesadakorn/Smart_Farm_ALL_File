@@ -10,7 +10,7 @@ function database() {
   const SendSw = require('./nbserver')
   const path = require('path');
 
-  const PORT = process.env.PORT || 5004;
+  const PORT = process.env.PORT || 8080;
   const app = express();
   app.use(cors());
   const router = express.Router();
@@ -80,6 +80,13 @@ function database() {
   router.post('/button', (req, res) => {
     SendSw.sendBtSwToLine(req.body.command)
   })
+
+  if (process.env.NODE_ENV === 'production') {
+    app.use(express.static("client/build/"))
+    app.get('*', function (req, res) {
+      res.sendFile(path.resolve(__dirname + 'client', 'build', 'index.html'));
+    });
+  }
 
   // append /api for our http requests
   app.use('/api', router);
