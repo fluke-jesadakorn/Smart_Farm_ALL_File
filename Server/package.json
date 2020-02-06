@@ -1,29 +1,47 @@
 {
-  "name": "smartfarm",
-  "version": "0.1.0",
+  "name": "crypto-bot",
+  "version": "1.0.0",
   "private": true,
-  "engines": {
-    "node": "10.13.0",
-    "npm": "6.4.1"
+  "scripts": {
+    "client": "next dev",
+    "server": "nodemon ./backend/centerAPI.js",
+    "dev": "NODE_ENV=development nodemon ./server.js",
+    "build": "next build",
+    "start": "next start",
+    "product": "npm run build && NODE_ENV=production nodemon ./server.js"
   },
-  "main": "index.js",
   "dependencies": {
-    "axios": "^0.19.0",
-    "concurrently": "^5.0.0",
+    "antd": "^3.26.5",
+    "apexcharts": "^3.15.2",
+    "axios": "^0.19.1",
+    "axios-hooks": "^1.9.0",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.4",
+    "core-js": "^3.6.4",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "mongoose": "^5.7.11",
-    "morgan": "^1.9.1",
-    "nodemon": "^2.0.1",
-    "save": "^2.4.0",
-    "socket.io": "^2.3.0"
+    "isomorphic-unfetch": "^3.0.0",
+    "js-cookie": "^2.2.1",
+    "jsdom": "^16.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.8.9",
+    "next": "9.1.6",
+    "prop-types": "^15.7.2",
+    "react": "16.12.0",
+    "react-apexcharts": "^1.3.6",
+    "react-dom": "16.12.0",
+    "react-redux": "^7.1.3",
+    "reactstrap": "^8.2.0",
+    "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-persist": "^6.0.0",
+    "redux-thunk": "^2.3.0",
+    "socket.io": "^2.3.0",
+    "styled-jsx": "^3.2.4"
   },
-  "scripts": {
-    "start": "npm install && node index.js",
-    "heroku-postbuild": "cd client && npm install && npm run build",
-    "client": "npm start --prefix client",
-    "server": "node index.js",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+  "devDependencies": {
+    "nodemon": "^2.0.2",
+    "win-node-env": "^0.4.0"
   }
 }

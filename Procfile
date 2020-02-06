@@ -1,1 +1,0 @@
-web: cd Server && npm run dev
