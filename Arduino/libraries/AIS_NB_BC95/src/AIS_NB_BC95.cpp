@@ -535,8 +535,9 @@ UDPReceive AIS_NB_BC95:: waitResponse()
 			  rx_ret.data = input.substring(index4+1,index5);
 			  rx_ret.remaining_length = input.substring(index5+1,index6).toInt();
 
-			  if (debug) receive_UDP(rx_ret);
-
+			  if (debug) {
+				  receive_UDP(rx_ret);
+			  }
            }
 
           send_NSOMI=false;
@@ -695,14 +696,7 @@ void AIS_NB_BC95:: receive_UDP(UDPReceive rx)
   else
   {
 		dataStr = toString(rx.data);
-		if(dataStr == "0"){
-			digitalWrite(14,0);
-			Serial.println("Turn Off Relay " + dataStr);
-		}else if (dataStr == "1"){
-			digitalWrite(14,1);
-			Serial.println("Turn On Relay " + dataStr);
-		}
-		Serial.println("# Data--> " + dataStr);
+		retData = dataStr;
   }
   Serial.println("# Remaining length--> " + String(rx.remaining_length));
   Serial.println(F("################################################################"));

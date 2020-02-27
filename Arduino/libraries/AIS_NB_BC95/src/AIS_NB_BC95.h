@@ -56,6 +56,7 @@ class AIS_NB_BC95
 public:
 	AIS_NB_BC95();
 	bool debug;
+	String retData;
 
 	void (*Event_debug)(char *data);
 	void reset();
