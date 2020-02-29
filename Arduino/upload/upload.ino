@@ -19,7 +19,9 @@ int sensorValue = 0;
 int temp;
 int toggle = 0;
 int setHumidity;
-boolean runOnOff = false;
+bool handleTimeOnOff = false;
+bool waterState = false;
+bool humidityLogic = false;
 
 void setup()
 {
@@ -35,56 +37,99 @@ void setup()
 }
 
 void loop() {
+  //st: settime
+  //oo: onOff
+  //gt: get Time
+  //ws: water state
+  
   unsigned long currentMillis = millis();
+  sensorValue = analogRead(soil_sensor);
 
   if (currentMillis - previousMillis >= interval) {
     cnt++;
-    sensorValue = analogRead(soil_sensor);
     UDPSend udp = AISnb.sendUDPmsgStr(serverIP, serverPort, String(sensorValue));
     Serial.print("Moisture Value = " );
     Serial.println(sensorValue);
+    Serial.println("Data From Line is : " + dataFromLine);
     previousMillis = currentMillis;
   }
+
   UDPReceive resp = AISnb.waitResponse();
 
+  //Data from line
   dataFromLine = AISnb.retData;
 
-  if (dataFromLine.substring(0, 2) == "oo") {
-    runOnOff = false;
+  //Golbal state water State
+  if(waterState == false){
+    digitalWrite(14, 0);
+  }
+  if(waterState == true){
+    digitalWrite(14, 1);
   }
 
-  if (dataFromLine.substring(0, 2) == "oo" && dataFromLine.substring(2, 4) == "00" && runOnOff == false) {
-    onOffWater(LOW);
+  //force off water
+  if (dataFromLine.substring(0, 2) == "oo" && dataFromLine.substring(2, 4) == "00") {
+    waterState = false;
+    handleTimeOnOff = false;
+    humidityLogic == false;
   }
 
-  if (dataFromLine.substring(0, 2) == "oo" && dataFromLine.substring(2, 4) == "01" && runOnOff == false) {
-    onOffWater(HIGH);
+  //force on water
+  if (dataFromLine.substring(0, 2) == "oo" && dataFromLine.substring(2, 4) == "01") {
+    waterState = true;
+    handleTimeOnOff = false;
+    humidityLogic == false;
   }
 
+  //get time
+  if(dataFromLine.substring(0, 2) == "gt"){
+    sendData(String(tempTime));
+  }
+
+  //get waterState
+  if(dataFromLine.substring(0, 2) == "ws"){
+    sendData(String(waterState));
+  }
+
+  //Set trigger water off time
   if (dataFromLine.substring(0, 2) == "st") {
-    runOnOff = true;
+    handleTimeOnOff = true;
   }
-
-  if (runOnOff == true) {
+  
+  //Set off time
+  if (handleTimeOnOff == true) {
     temp = dataFromLine.substring(2, 3).toInt();
-    period = (unsigned long)temp * 3600000;
+    period = (unsigned long)temp * 1000; //3600000 Hr
     if (millis() - tempTime > period) {
-      digitalWrite(14, toggle);
+      waterState = true;
       tempTime = millis();
+    }else{
+      waterState = false;
     }
   }
+
+  //Set off when huminity less than value
   if (dataFromLine.substring(0, 2) == "hm") {
     setHumidity = dataFromLine.substring(2).toInt();
   }
-  
+
+  //Huminity logic
   if (sensorValue < setHumidity) {
-    onOffWater(HIGH);
-  } else if (sensorValue > setHumidity) {
-    runOnOff = false;
-    onOffWater(LOW);
+    waterState = true;
+  }else if (sensorValue > setHumidity) {
+//    handleTimeOnOff = false;
+    waterState = false;
   }
 }
 
-void onOffWater(int state) {
-  digitalWrite(14, state);
+//force send data function
+void sendData(String value) {
+  UDPSend udp = AISnb.sendUDPmsgStr(serverIP, serverPort, String(value));
+}
+
+void checkStatus(){
+  if(waterState == false)
+    sendData("wt00");
+  else if(waterState == true)
+    sendData("wt01");
 }
